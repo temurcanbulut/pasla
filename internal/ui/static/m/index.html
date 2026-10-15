@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0D6EFB">
+<title>Pasla</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-512.png">
+<link rel="stylesheet" href="/m/app.css">
+<script src="/i18n.js" defer></script>
+<script src="/m/app.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <img class="mk on-light" src="/mark.svg" alt="" width="42" height="35">
+  <img class="mk on-dark" src="/mark-dark.svg" alt="" width="42" height="35">
+  <span class="brand">Pasla</span>
+  <span class="bar-actions">
+    <button class="link lang" id="lang" type="button">TR</button>
+    <button class="link danger" id="leave" type="button" hidden data-i18n="Disconnect">Disconnect</button>
+  </span>
+</header>
+<main id="main" aria-live="polite"></main>
+<div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>

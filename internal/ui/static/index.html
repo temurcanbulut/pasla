@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Pasla</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="icon.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="stylesheet" href="app.css">
+<script src="i18n.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" class="sprite" aria-hidden="true">
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M21.5 3.5 2.8 10.6c-.8.3-.8 1.4 0 1.7l6.1 2.4 2.4 6.1c.3.8 1.4.8 1.7 0L21.5 3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8.9 14.7 5.6-5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-windows" viewBox="0 0 24 24"><path d="M3 5.5 10.5 4.4v7.1H3zM12 4.2 21 3v8.5h-9zM3 12.9h7.5V20L3 18.9zM12 12.9h9V21l-9-1.2z" fill="currentColor"/></symbol>
+  <symbol id="i-linux" viewBox="0 0 24 24"><path d="M12 2.8c-2.3 0-3.6 1.9-3.6 4.4 0 1.4.3 2.3-.7 3.8-1.2 1.8-2.6 3.8-2.6 6.2 0 .6.1 1.1.3 1.5-.9.4-1.5.9-1.2 1.7.4 1 2.3.6 3.6 1.1 1.2.4 2.4.6 3.2-.4.4.1.7.1 1 .1s.6 0 1-.1c.8 1 2 .8 3.2.4 1.3-.5 3.2-.1 3.6-1.1.3-.8-.3-1.3-1.2-1.7.2-.4.3-.9.3-1.5 0-2.4-1.4-4.4-2.6-6.2-1-1.5-.7-2.4-.7-3.8 0-2.5-1.3-4.4-3.6-4.4Z" fill="currentColor"/><circle cx="10.6" cy="7.4" r=".9" fill="var(--stamp-bg, #fff)"/><circle cx="13.4" cy="7.4" r=".9" fill="var(--stamp-bg, #fff)"/></symbol>
+  <symbol id="i-macos" viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C6.9 7.3 5.4 8.2 4.6 9.7 3 12.5 4.2 16.7 5.8 19c.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.4-.9-2.4-3.8ZM14.2 5.6c.6-.8 1.1-1.8 1-2.9-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.8 1 .1 2.1-.5 2.7-1.3Z" fill="currentColor"/></symbol>
+  <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h3.7l2 2.2h7.3A2.5 2.5 0 0 1 21 9.7v7.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6.5 3h7l4.5 4.5V19a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13.5 3v4.5H18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 8v5M12 16v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12h12M11 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-mark on-light" src="mark.svg" alt="">
+      <img class="brand-mark on-dark" src="mark-dark.svg" alt="">
+      <span class="brand-name">Pasla</span>
+    </div>
+    <button class="me" id="me-btn" type="button" data-i18n-title="Settings for this device">
+      <span class="me-label" data-i18n="This device">This device</span>
+      <span class="me-name" id="me-name">…</span>
+      <span class="me-addr" id="me-addr"></span>
+    </button>
+    <div class="top-actions">
+      <button class="btn ghost" id="open-received" type="button"><svg><use href="#i-folder"/></svg><span data-i18n="Received">Received</span></button>
+      <button class="icon-btn" id="settings-btn" type="button" data-i18n-aria-label="Settings"><svg><use href="#i-gear"/></svg></button>
+    </div>
+  </header>
+
+  <aside class="devices" id="devices" data-i18n-aria-label="Devices">
+    <div class="devices-head">
+      <h2 data-i18n="Devices on your network">Devices on your network</h2>
+      <span class="scan" id="scan-indicator"></span>
+    </div>
+    <ul class="device-list" id="device-list"></ul>
+    <div class="phone-entry">
+      <button class="btn ghost wide" id="phone-btn" type="button"><svg><use href="#i-phone"/></svg><span data-i18n="Connect a phone">Connect a phone</span></button>
+    </div>
+    <form class="add-ip" id="add-ip-form" autocomplete="off">
+      <label for="add-ip" data-i18n="Not in the list? Add by IP">Not in the list? Add by IP</label>
+      <div class="add-ip-row">
+        <input id="add-ip" name="addr" inputmode="decimal" placeholder="192.168.1.42" spellcheck="false">
+        <button class="icon-btn solid" type="submit" data-i18n-aria-label="Add"><svg><use href="#i-plus"/></svg></button>
+      </div>
+    </form>
+  </aside>
+
+  <main class="stage" id="stage"></main>
+</div>
+
+<div class="offers" id="offers" aria-live="polite"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<dialog class="sheet pair-sheet" id="pair-dialog"></dialog>
+<dialog class="sheet" id="settings-dialog"></dialog>
+<dialog class="sheet" id="phone-dialog"></dialog>
+
+<template id="t-empty">
+  <section class="welcome">
+    <div class="welcome-art" aria-hidden="true">
+      <span class="stamp lg ghost-stamp a"><span class="stamp-face"><svg><use href="#i-device"/></svg></span></span>
+      <span class="flight"><svg><use href="#i-plane"/></svg></span>
+      <span class="stamp lg ghost-stamp b"><span class="stamp-face"><svg><use href="#i-device"/></svg></span></span>
+    </div>
+    <h1 data-i18n="Choose a device">Choose a device</h1>
+    <p data-i18n="Computers on the same network with Pasla open appear in the list on the left. Pick one, pair once, then drag and drop your files.">Computers on the same network with Pasla open appear in the list on the left. Pick one, pair once, then drag and drop your files.</p>
+  </section>
+</template>
+</body>
+</html>

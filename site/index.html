@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasla: offline file sharing for your local network</title>
+<meta name="description" content="Send files, folders and text between the computers and phones on your local network. No internet, no account, no cloud. Free and open source, for Windows, Linux and any phone browser.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0F2A56">
+<link rel="icon" href="img/icon-small.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/icon-1024.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://temurcanbulut.github.io/pasla/">
+<link rel="canonical" href="https://temurcanbulut.github.io/pasla/">
+<meta property="og:title" content="Pasla: offline file sharing for your local network">
+<meta property="og:description" content="Pass files to the computer next to you. No internet, no account, no cloud.">
+<meta property="og:image" content="https://temurcanbulut.github.io/pasla/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="style.css">
+<script src="site.js" defer></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#" aria-label="Pasla">
+      <img class="on-light" src="img/logo-plain.svg" alt="Pasla" width="113" height="40">
+      <img class="on-dark" src="img/logo-plain-dark.svg" alt="Pasla" width="113" height="40">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#how" data-i="nav.how">How it works</a>
+      <a href="#phones" data-i="nav.phones">Phones</a>
+      <a href="#security" data-i="nav.security">Security</a>
+      <a href="#faq" data-i="nav.faq">FAQ</a>
+    </nav>
+    <div class="top-actions">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="tr" aria-pressed="false">TR</button>
+      </div>
+      <a class="gh" href="https://github.com/temurcanbulut/pasla" aria-label="GitHub">
+        <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow" data-i="hero.eyebrow">Free and open source · Windows · Linux · any phone</p>
+    <h1 data-i="hero.title">Pass files to the computer next to you.</h1>
+    <p class="lede" data-i="hero.lede">Pasla moves files, folders and text between the computers and phones on your home or office network. No internet, no account, no cloud: one small program, encrypted from device to device.</p>
+    <div class="cta">
+      <a class="btn primary" id="dl-main" href="https://github.com/temurcanbulut/pasla/releases/download/v0.4.0-beta.1/pasla-windows-amd64.exe">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+        <span id="dl-main-label" data-i="hero.dlWin">Download for Windows</span>
+      </a>
+      <a class="btn" href="#download" data-i="hero.other">Other systems</a>
+    </div>
+    <p class="fineprint" data-i="hero.fine">One file, about 8 MB. Nothing to install.</p>
+    <figure class="shot hero-shot">
+      <img src="img/transfer.png" data-src-tr="img/turkish.png" width="1280" height="860"
+        alt="Pasla sending a large file to a paired computer while another computer offers two files"
+        data-alt-tr="Pasla, eşleşmiş bir bilgisayara büyük bir dosya gönderirken">
+    </figure>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap why-grid">
+    <p data-i="why.1"><b>No USB sticks.</b> Carry the file across the network, not across the room.</p>
+    <p data-i="why.2"><b>No shared folders.</b> Nothing to set up, no permissions to untangle.</p>
+    <p data-i="why.3"><b>No upload, no download.</b> The file never leaves your network to travel one metre.</p>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <h2 data-i="how.title">How it works</h2>
+    <p class="section-lede" data-i="how.lede">Three steps the first time. After that, just drag and drop.</p>
+    <ol class="steps">
+      <li>
+        <span class="num">1</span>
+        <h3 data-i="how.1.t">Run it on both computers</h3>
+        <p data-i="how.1.p">Download the file and double-click it. The interface opens in your browser, and computers running Pasla on the same network show up within seconds.</p>
+      </li>
+      <li>
+        <span class="num">2</span>
+        <h3 data-i="how.2.t">Pair them once</h3>
+        <p data-i="how.2.p">Both screens show the same 6-digit code. If it matches, confirm on both. From then on the two devices recognise each other, even when their IP addresses change.</p>
+      </li>
+      <li>
+        <span class="num">3</span>
+        <h3 data-i="how.3.t">Drag and drop</h3>
+        <p data-i="how.3.p">Drop files or whole folders onto the device. The other side accepts and the transfer starts. Folder structure is kept, and nothing is ever overwritten.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section alt" id="phones">
+  <div class="wrap split">
+    <div class="split-text">
+      <h2 data-i="phones.title">Phones too, without an app</h2>
+      <p data-i="phones.p1">Press <b>Connect a phone</b> on the computer and scan the QR code. The same 4-digit number appears on both screens; if it matches, allow it on the computer.</p>
+      <p data-i="phones.p2">Now the phone can send photos, files and text to the computer, and download what the computer sends it. It works in the browser you already have, on iPhone and Android.</p>
+      <ul class="ticks">
+        <li data-i="phones.l1">Nothing to install on the phone</li>
+        <li data-i="phones.l2">The phone port opens only while you need it</li>
+        <li data-i="phones.l3">An unused phone is disconnected after 30 minutes</li>
+      </ul>
+    </div>
+    <div class="phone-pair">
+      <figure class="shot">
+        <img src="img/phone-approve.png" width="1280" height="860" loading="lazy"
+          alt="Connect a phone: the QR code and the 4-digit check number on the computer"
+          data-alt-tr="Telefonu bağla: bilgisayarda QR kod ve 4 haneli kontrol numarası">
+      </figure>
+      <figure class="shot phone">
+        <img src="img/phone.png" data-src-tr="img/phone-tr.png" width="390" height="1102" loading="lazy"
+          alt="The Pasla page on a phone" data-alt-tr="Telefonda Pasla sayfası">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="wrap">
+    <h2 data-i="feat.title">Small program, the things you need</h2>
+    <div class="features">
+      <div class="feature">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.5"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 7.8a6 6 0 0 1 0 8.4M4.9 4.9a10 10 0 0 0 0 14.2M19.1 4.9a10 10 0 0 1 0 14.2"/></svg>
+        <h3 data-i="feat.1.t">Finds your devices</h3>
+        <p data-i="feat.1.p">Computers on the same network appear by themselves. Devices on another subnet can be added by IP once.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <h3 data-i="feat.2.t">Files, folders, text</h3>
+        <p data-i="feat.2.p">Whole folder trees, screenshots pasted from the clipboard, or a link or note to copy on the other screen.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></svg>
+        <h3 data-i="feat.3.t">As fast as your network</h3>
+        <p data-i="feat.3.p">Files stream straight to disk and are checked with SHA-256 on arrival. Several files go in parallel.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3.6 9h16.8M3.6 15h16.8"/><path d="M4 4l16 16"/></svg>
+        <h3 data-i="feat.4.t">Truly offline</h3>
+        <p data-i="feat.4.p">The interface, fonts and icons are built in. Pasla never contacts anything outside your network.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
+        <h3 data-i="feat.5.t">You decide what arrives</h3>
+        <p data-i="feat.5.p">Every transfer asks first, unless you trust a device to send without asking. Program files are flagged.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+        <h3 data-i="feat.6.t">Command line, if you like</h3>
+        <p data-i="feat.6.p"><code>pasla send -to Office D:\Photos</code> sends through the running Pasla, for scripts and big batches.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="security">
+  <div class="wrap">
+    <h2 data-i="sec.title">Made to be trusted on your network</h2>
+    <p class="section-lede" data-i="sec.lede">A local network is not automatically a safe one. Pasla assumes someone else may be on it.</p>
+    <dl class="sec-list">
+      <div>
+        <dt data-i="sec.1.t">Encrypted</dt>
+        <dd data-i="sec.1.p">Computers talk over mutual TLS 1.3; phones over TLS. Nobody on the network can read what you send.</dd>
+      </div>
+      <div>
+        <dt data-i="sec.2.t">Verified pairing</dt>
+        <dd data-i="sec.2.p">You compare a 6-digit code on both screens once. After that, every connection checks the other device's certificate fingerprint, not its name or IP.</dd>
+      </div>
+      <div>
+        <dt data-i="sec.3.t">Nothing outside the folder</dt>
+        <dd data-i="sec.3.p">Incoming file names are cleaned and the code is fuzz-tested. On Windows, received files get the Mark of the Web, like browser downloads.</dd>
+      </div>
+      <div>
+        <dt data-i="sec.4.t">Only you can use it</dt>
+        <dd data-i="sec.4.p">The interface is reachable only from your computer, needs a session secret, and refuses requests from other websites.</dd>
+      </div>
+      <div>
+        <dt data-i="sec.5.t">Hard to guess, quick to expire</dt>
+        <dd data-i="sec.5.p">A phone's QR key lasts 10 minutes, dies after 8 wrong guesses, and each phone is also approved on the computer.</dd>
+      </div>
+      <div>
+        <dt data-i="sec.6.t">No accounts, no tracking</dt>
+        <dd data-i="sec.6.p">There is no server and no telemetry. Everything Pasla knows stays in a folder on your computer.</dd>
+      </div>
+    </dl>
+    <p class="sec-links">
+      <a href="https://github.com/temurcanbulut/pasla/blob/main/docs/PROTOCOL.md" data-href-tr="https://github.com/temurcanbulut/pasla/blob/main/docs/PROTOCOL.tr.md" data-i="sec.proto">Protocol and threat model</a>
+      <a href="https://github.com/temurcanbulut/pasla/blob/main/SECURITY.md" data-href-tr="https://github.com/temurcanbulut/pasla/blob/main/SECURITY.tr.md" data-i="sec.report">Report a vulnerability</a>
+    </p>
+  </div>
+</section>
+
+<section class="section" id="download">
+  <div class="wrap">
+    <h2 data-i="dl.title">Download</h2>
+    <p class="section-lede" data-i="dl.lede">Pick the file for your system. If your network has no internet, carry it over on a USB stick once.</p>
+    <div class="downloads">
+      <div class="dl-card">
+        <h3>Windows</h3>
+        <p data-i="dl.win">Windows 10 and 11</p>
+        <a class="btn primary" href="https://github.com/temurcanbulut/pasla/releases/download/v0.4.0-beta.1/pasla-windows-amd64.exe" data-i="dl.x64">64-bit (x64)</a>
+        <a class="sub-link" href="https://github.com/temurcanbulut/pasla/releases/download/v0.4.0-beta.1/pasla-windows-arm64.exe">ARM64</a>
+      </div>
+      <div class="dl-card">
+        <h3>Linux</h3>
+        <p data-i="dl.linux">Any distribution, no dependencies</p>
+        <a class="btn primary" href="https://github.com/temurcanbulut/pasla/releases/download/v0.4.0-beta.1/pasla-linux-amd64" data-i="dl.x64">64-bit (x64)</a>
+        <a class="sub-link" href="https://github.com/temurcanbulut/pasla/releases/download/v0.4.0-beta.1/pasla-linux-arm64" data-i="dl.arm">ARM64 (Raspberry Pi 4/5)</a>
+      </div>
+      <div class="dl-card">
+        <h3 data-i="dl.phone.t">Phones</h3>
+        <p data-i="dl.phone.p">Nothing to download. Scan the QR code a computer running Pasla shows you.</p>
+      </div>
+    </div>
+    <div class="dl-notes">
+      <p data-i="dl.n1"><b>Windows:</b> double-click the file. The interface opens in your browser and a Pasla icon appears next to the clock. The first time, allow it on <b>Private networks</b> when the firewall asks.</p>
+      <p data-i="dl.n2"><b>Linux:</b> <code>chmod +x pasla-linux-amd64 &amp;&amp; ./pasla-linux-amd64</code></p>
+      <p data-i="dl.n3">Check your download against <code>SHA256SUMS.txt</code> on the <a href="https://github.com/temurcanbulut/pasla/releases/tag/v0.4.0-beta.1">release page</a>, or <a href="https://github.com/temurcanbulut/pasla#build-from-source">build it yourself</a> with Go.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="faq">
+  <div class="wrap narrow">
+    <h2 data-i="faq.title">Questions</h2>
+    <details>
+      <summary data-i="faq.1.q">Does Pasla need an internet connection?</summary>
+      <p data-i="faq.1.a">No. Your devices only need to be on the same network, through the same router or switch, over cable or Wi-Fi. Pasla works on networks with no internet at all.</p>
+    </details>
+    <details>
+      <summary data-i="faq.2.q">Is it really free?</summary>
+      <p data-i="faq.2.a">Yes. Pasla is open source under the MIT licence. There are no accounts, ads, paid tiers or tracking.</p>
+    </details>
+    <details>
+      <summary data-i="faq.3.q">Windows warns me about the file. Is it safe?</summary>
+      <p data-i="faq.3.a">New programs that are not code-signed often get a SmartScreen warning at first, and some AI-based antivirus engines guess wrong about them. All the source is public: you can check the file against <code>SHA256SUMS.txt</code> or build it yourself.</p>
+    </details>
+    <details>
+      <summary data-i="faq.4.q">Why does my phone say the connection is not private?</summary>
+      <p data-i="faq.4.a">Your computer made its own certificate, so the phone's browser cannot check it against a public authority. The connection is still encrypted, and the 4-digit number you compare is what proves you reached the right computer.</p>
+    </details>
+    <details>
+      <summary data-i="faq.5.q">What happens when I close the window?</summary>
+      <p data-i="faq.5.a">Pasla quits a few seconds later; running transfers finish first. If other devices should be able to send you files while the window is closed, turn on <b>Keep running after I close the window</b> in Settings.</p>
+    </details>
+    <details>
+      <summary data-i="faq.6.q">Is there a macOS version?</summary>
+      <p data-i="faq.6.a">Not yet. Until there is, a Mac can join like a phone: scan or open the link that <b>Connect a phone</b> shows, in any browser.</p>
+    </details>
+    <details>
+      <summary data-i="faq.7.q">My devices are on different subnets.</summary>
+      <p data-i="faq.7.a">Routers do not pass on the broadcasts Pasla uses to find devices. Add the other device by its IP address once; after pairing, Pasla looks for it at its last known address.</p>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="foot-brand">
+      <img class="on-light" src="img/logo-plain.svg" alt="Pasla" width="91" height="32">
+      <img class="on-dark" src="img/logo-plain-dark.svg" alt="Pasla" width="91" height="32">
+      <p data-i="foot.about">Pasla is Turkish for “pass it”. Open source under the MIT licence.</p>
+    </div>
+    <nav class="foot-links" aria-label="Project">
+      <a href="https://github.com/temurcanbulut/pasla">GitHub</a>
+      <a href="https://github.com/temurcanbulut/pasla/releases" data-i="foot.releases">Releases</a>
+      <a href="https://github.com/temurcanbulut/pasla/blob/main/CHANGELOG.md" data-href-tr="https://github.com/temurcanbulut/pasla/blob/main/CHANGELOG.tr.md" data-i="foot.changes">Changes</a>
+      <a href="https://github.com/temurcanbulut/pasla/issues" data-i="foot.issues">Report a problem</a>
+    </nav>
+  </div>
+  <p class="wrap foot-note" data-i="foot.note">This site uses no cookies and no trackers. Your language choice is remembered in your browser only.</p>
+</footer>
+
+</body>
+</html>

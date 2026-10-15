@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
+      - run: go test -count=1 ./...
+      - run: make release VERSION="${GITHUB_REF_NAME}"
+      - name: Extract release notes from the English changelog
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          version="${version%%-*}"
+          awk -v heading="## $version" '
+            $0 == heading { found = 1; next }
+            found && /^## / { exit }
+            found { print }
+          ' CHANGELOG.md > "$RUNNER_TEMP/release-notes.md"
+          test -s "$RUNNER_TEMP/release-notes.md"
+      - uses: softprops/action-gh-release@v2
+        with:
+          body_path: ${{ runner.temp }}/release-notes.md
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          fail_on_unmatched_files: true
+          files: |
+            dist/pasla-*
+            dist/SHA256SUMS.txt
