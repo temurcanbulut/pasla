@@ -48,31 +48,59 @@
 <main>
 
 <section class="hero">
-  <div class="wrap">
-    <p class="eyebrow" data-i="hero.eyebrow">Free and open source · Windows · Linux · any phone</p>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+    <p class="eyebrow" data-i="hero.eyebrow">One file. Your network.</p>
     <h1 data-i="hero.title">Pass files to the computer next to you.</h1>
-    <p class="lede" data-i="hero.lede">Pasla moves files, folders and text between the computers and phones on your home or office network. No internet, no account, no cloud: one small program, encrypted from device to device.</p>
+    <p class="lede" data-i="hero.lede">Send files, folders and text between your computers and phones. Straight across your local network, encrypted from device to device.</p>
     <div class="cta">
       <a class="btn primary" id="dl-main" href="https://github.com/temurcanbulut/pasla/releases/download/v0.4.0-beta.1/pasla-windows-amd64.exe">
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
         <span id="dl-main-label" data-i="hero.dlWin">Download for Windows</span>
       </a>
-      <a class="btn" href="#download" data-i="hero.other">Other systems</a>
+      <a class="btn" href="#download" data-i="hero.other">All downloads</a>
     </div>
-    <p class="fineprint" data-i="hero.fine">One file, about 8 MB. Nothing to install.</p>
-    <figure class="shot hero-shot">
-      <img src="img/transfer.png" data-src-tr="img/turkish.png" width="1280" height="860"
-        alt="Pasla sending a large file to a paired computer while another computer offers two files"
-        data-alt-tr="Pasla, eşleşmiş bir bilgisayara büyük bir dosya gönderirken">
-    </figure>
+    <p class="fineprint" data-i="hero.fine">Free and open source. Windows, Linux and phone browsers.</p>
+    </div>
+    <div class="transfer-demo" id="demo" aria-labelledby="demo-title" data-state="ready" data-kind="file">
+      <div class="demo-heading">
+        <span class="demo-kicker" data-i="demo.kicker">A little test drive</span>
+        <span class="local-badge"><span></span><span data-i="demo.local">Local network</span></span>
+      </div>
+      <h2 id="demo-title" data-i="demo.title">Go on, pass it.</h2>
+      <div class="demo-devices" aria-hidden="true">
+        <div class="demo-device">
+          <svg viewBox="0 0 80 64" fill="none"><rect x="10" y="5" width="60" height="42" rx="5"/><path d="M3 54h74l-5 5H8zM28 54h24"/><path class="device-glow" d="m31 25 7 7 13-14"/></svg>
+          <span data-i="demo.computer">Your computer</span>
+        </div>
+        <div class="demo-route"><span class="route-dot"></span><span class="travelling-file">↑</span><span class="route-dot"></span></div>
+        <div class="demo-device">
+          <svg viewBox="0 0 48 64" fill="none"><rect x="9" y="2" width="30" height="60" rx="6"/><path d="M19 8h10M21 55h6"/><path class="device-glow" d="m17 31 5 5 9-11"/></svg>
+          <span data-i="demo.phone">Your phone</span>
+        </div>
+      </div>
+      <div class="demo-modes" role="group" aria-label="Demo content" data-label-tr="Demo içeriği" hidden>
+        <button type="button" data-demo-kind="file" aria-pressed="true" data-i="demo.file">File</button>
+        <button type="button" data-demo-kind="text" aria-pressed="false" data-i="demo.text">Text</button>
+      </div>
+      <div class="demo-payload">
+        <span class="payload-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14 3H6v18h12V7zM14 3v5h4M9 12h6M9 16h4"/></svg></span>
+        <div><strong id="demo-filename">photos.zip</strong><span id="demo-description">24 MB · 3 files</span></div>
+        <span class="payload-check" aria-hidden="true">✓</span>
+      </div>
+      <div class="demo-progress" role="progressbar" aria-label="Demo transfer progress" data-label-tr="Demo aktarım ilerlemesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+      <div class="demo-status"><span id="demo-status" role="status">Paired and ready.</span><span id="demo-percent" aria-hidden="true">0%</span></div>
+      <button class="btn demo-action" id="demo-action" type="button" hidden><span id="demo-action-label">Send demo file</span><span aria-hidden="true">↗</span></button>
+      <p class="demo-note" data-i="demo.note">Interactive demo. Nothing is uploaded.</p>
+    </div>
   </div>
 </section>
 
 <section class="why">
   <div class="wrap why-grid">
-    <p data-i="why.1"><b>No USB sticks.</b> Carry the file across the network, not across the room.</p>
-    <p data-i="why.2"><b>No shared folders.</b> Nothing to set up, no permissions to untangle.</p>
-    <p data-i="why.3"><b>No upload, no download.</b> The file never leaves your network to travel one metre.</p>
+    <p data-i="why.1">No accounts</p>
+    <p data-i="why.2">No cloud</p>
+    <p data-i="why.3">Encrypted transfers</p>
   </div>
 </section>
 
@@ -105,23 +133,36 @@
     <div class="split-text">
       <h2 data-i="phones.title">Phones too, without an app</h2>
       <p data-i="phones.p1">Press <b>Connect a phone</b> on the computer and scan the QR code. The same 4-digit number appears on both screens; if it matches, allow it on the computer.</p>
-      <p data-i="phones.p2">Now the phone can send photos, files and text to the computer, and download what the computer sends it. It works in the browser you already have, on iPhone and Android.</p>
+      <p data-i="phones.p2">Send photos, files and text both ways, in the browser you already use. Works on iPhone and Android.</p>
       <ul class="ticks">
         <li data-i="phones.l1">Nothing to install on the phone</li>
         <li data-i="phones.l2">The phone port opens only while you need it</li>
         <li data-i="phones.l3">An unused phone is disconnected after 30 minutes</li>
       </ul>
     </div>
-    <div class="phone-pair">
-      <figure class="shot">
+    <div class="product-preview">
+      <div class="preview-tabs" role="group" aria-label="Screenshots" data-label-tr="Ekran görüntüleri" hidden>
+        <button type="button" data-preview="desktop" aria-pressed="true" data-i="preview.desktop">Computer</button>
+        <button type="button" data-preview="phone" aria-pressed="false" data-i="preview.phone">Phone</button>
+        <button type="button" data-preview="pairing" aria-pressed="false" data-i="preview.pairing">Pairing</button>
+      </div>
+      <div class="preview-stage">
+      <figure class="preview-screen" id="preview-desktop">
+        <img src="img/transfer.png" data-src-tr="img/turkish.png" width="1280" height="860" loading="lazy"
+          alt="Pasla sending a large file to a paired computer while another computer offers two files"
+          data-alt-tr="Pasla, eşleşmiş bir bilgisayara büyük bir dosya gönderirken">
+      </figure>
+      <figure class="preview-screen is-phone" id="preview-phone" hidden>
+        <img src="img/phone.png" data-src-tr="img/phone-tr.png" width="390" height="1102" loading="lazy"
+          alt="The Pasla page on a phone" data-alt-tr="Telefonda Pasla sayfası">
+      </figure>
+      <figure class="preview-screen" id="preview-pairing" hidden>
         <img src="img/phone-approve.png" width="1280" height="860" loading="lazy"
           alt="Connect a phone: the QR code and the 4-digit check number on the computer"
           data-alt-tr="Telefonu bağla: bilgisayarda QR kod ve 4 haneli kontrol numarası">
       </figure>
-      <figure class="shot phone">
-        <img src="img/phone.png" data-src-tr="img/phone-tr.png" width="390" height="1102" loading="lazy"
-          alt="The Pasla page on a phone" data-alt-tr="Telefonda Pasla sayfası">
-      </figure>
+      </div>
+      <div class="preview-caption"><span data-i="preview.real">The actual app.</span><a href="img/transfer.png" id="preview-open"><span data-i="preview.open">View full screenshot</span><span aria-hidden="true"> ↗</span></a></div>
     </div>
   </div>
 </section>
@@ -165,39 +206,41 @@
 </section>
 
 <section class="section dark" id="security">
-  <div class="wrap">
+  <div class="wrap security-layout">
+    <div>
     <h2 data-i="sec.title">Made to be trusted on your network</h2>
     <p class="section-lede" data-i="sec.lede">A local network is not automatically a safe one. Pasla assumes someone else may be on it.</p>
-    <dl class="sec-list">
-      <div>
-        <dt data-i="sec.1.t">Encrypted</dt>
-        <dd data-i="sec.1.p">Computers talk over mutual TLS 1.3; phones over TLS. Nobody on the network can read what you send.</dd>
-      </div>
-      <div>
-        <dt data-i="sec.2.t">Verified pairing</dt>
-        <dd data-i="sec.2.p">You compare a 6-digit code on both screens once. After that, every connection checks the other device's certificate fingerprint, not its name or IP.</dd>
-      </div>
-      <div>
-        <dt data-i="sec.3.t">Nothing outside the folder</dt>
-        <dd data-i="sec.3.p">Incoming file names are cleaned and the code is fuzz-tested. On Windows, received files get the Mark of the Web, like browser downloads.</dd>
-      </div>
-      <div>
-        <dt data-i="sec.4.t">Only you can use it</dt>
-        <dd data-i="sec.4.p">The interface is reachable only from your computer, needs a session secret, and refuses requests from other websites.</dd>
-      </div>
-      <div>
-        <dt data-i="sec.5.t">Hard to guess, quick to expire</dt>
-        <dd data-i="sec.5.p">A phone's QR key lasts 10 minutes, dies after 8 wrong guesses, and each phone is also approved on the computer.</dd>
-      </div>
-      <div>
-        <dt data-i="sec.6.t">No accounts, no tracking</dt>
-        <dd data-i="sec.6.p">There is no server and no telemetry. Everything Pasla knows stays in a folder on your computer.</dd>
-      </div>
-    </dl>
     <p class="sec-links">
       <a href="https://github.com/temurcanbulut/pasla/blob/main/docs/PROTOCOL.md" data-href-tr="https://github.com/temurcanbulut/pasla/blob/main/docs/PROTOCOL.tr.md" data-i="sec.proto">Protocol and threat model</a>
       <a href="https://github.com/temurcanbulut/pasla/blob/main/SECURITY.md" data-href-tr="https://github.com/temurcanbulut/pasla/blob/main/SECURITY.tr.md" data-i="sec.report">Report a vulnerability</a>
     </p>
+    </div>
+    <div class="sec-list">
+      <details open>
+        <summary data-i="sec.1.t">Encrypted</summary>
+        <p data-i="sec.1.p">Computers talk over mutual TLS 1.3; phones over TLS. Nobody on the network can read what you send.</p>
+      </details>
+      <details>
+        <summary data-i="sec.2.t">Verified pairing</summary>
+        <p data-i="sec.2.p">You compare a 6-digit code on both screens once. After that, every connection checks the other device's certificate fingerprint, not its name or IP.</p>
+      </details>
+      <details>
+        <summary data-i="sec.3.t">Nothing outside the folder</summary>
+        <p data-i="sec.3.p">Incoming file names are cleaned and the code is fuzz-tested. On Windows, received files get the Mark of the Web, like browser downloads.</p>
+      </details>
+      <details>
+        <summary data-i="sec.4.t">Only you can use it</summary>
+        <p data-i="sec.4.p">The interface is reachable only from your computer, needs a session secret, and refuses requests from other websites.</p>
+      </details>
+      <details>
+        <summary data-i="sec.5.t">Hard to guess, quick to expire</summary>
+        <p data-i="sec.5.p">A phone's QR key lasts 10 minutes, dies after 8 wrong guesses, and each phone is also approved on the computer.</p>
+      </details>
+      <details>
+        <summary data-i="sec.6.t">No accounts, no tracking</summary>
+        <p data-i="sec.6.p">There is no server and no telemetry. Everything Pasla knows stays in a folder on your computer.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -228,6 +271,18 @@
       <p data-i="dl.n2"><b>Linux:</b> <code>chmod +x pasla-linux-amd64 &amp;&amp; ./pasla-linux-amd64</code></p>
       <p data-i="dl.n3">Check your download against <code>SHA256SUMS.txt</code> on the <a href="https://github.com/temurcanbulut/pasla/releases/tag/v0.4.0-beta.1">release page</a>, or <a href="https://github.com/temurcanbulut/pasla#build-from-source">build it yourself</a> with Go.</p>
     </div>
+    <details class="linux-setup">
+      <summary data-i="dl.setup">Linux / Kali: quick start</summary>
+      <p data-i="dl.setupIntro">On an x86_64 (amd64) machine, paste these commands into a terminal. The program starts only if the checksum matches. No root or Go installation needed.</p>
+      <pre tabindex="0" aria-label="Linux quick start commands" data-label-tr="Linux başlangıç komutları"><code>mkdir -p ~/Applications/pasla &amp;&amp;
+cd ~/Applications/pasla &amp;&amp;
+curl -fLO https://github.com/temurcanbulut/pasla/releases/download/v0.4.0-beta.1/pasla-linux-amd64 &amp;&amp;
+curl -fLO https://github.com/temurcanbulut/pasla/releases/download/v0.4.0-beta.1/SHA256SUMS.txt &amp;&amp;
+sha256sum --check --ignore-missing SHA256SUMS.txt &amp;&amp;
+chmod +x pasla-linux-amd64 &amp;&amp;
+./pasla-linux-amd64</code></pre>
+      <p data-i="dl.setupNetwork">Keep the terminal open. Run Pasla on the other computer on the same local network, compare the pairing code on both screens, then send a small file each way. In a virtual machine, use a bridged network adapter for automatic discovery.</p>
+    </details>
   </div>
 </section>
 
@@ -283,6 +338,11 @@
   </div>
   <p class="wrap foot-note" data-i="foot.note">This site uses no cookies and no trackers. Your language choice is remembered in your browser only.</p>
 </footer>
+
+<dialog class="screenshot-dialog" aria-labelledby="screenshot-title">
+  <div class="dialog-top"><h2 id="screenshot-title" data-i="preview.title">Inside Pasla</h2><button type="button" class="dialog-close"><span data-i="preview.close">Close</span><span aria-hidden="true"> ×</span></button></div>
+  <img id="screenshot-full" alt="">
+</dialog>
 
 </body>
 </html>

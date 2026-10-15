@@ -13,17 +13,45 @@
     "nav.security": "Güvenlik",
     "nav.faq": "SSS",
 
-    "hero.eyebrow": "Ücretsiz ve açık kaynak · Windows · Linux · her telefon",
+    "hero.eyebrow": "Tek dosya. Senin ağın.",
     "hero.title": "Dosyayı yanındaki bilgisayara pasla.",
-    "hero.lede": "Pasla, evinizdeki ya da ofisinizdeki ağda bilgisayarlar ve telefonlar arasında dosya, klasör ve metin taşır. İnternet, hesap ya da bulut gerekmez: tek küçük bir program, cihazdan cihaza şifreli.",
+    "hero.lede": "Bilgisayarlarınız ve telefonlarınız arasında dosya, klasör ve metin gönderin. Doğrudan yerel ağınızdan, cihazdan cihaza şifreli.",
     "hero.dlWin": "Windows için indir",
     "hero.dlLinux": "Linux için indir",
-    "hero.other": "Diğer sistemler",
-    "hero.fine": "Tek dosya, yaklaşık 8 MB. Kurulum gerekmez.",
+    "hero.other": "Tüm indirmeler",
+    "hero.fine": "Ücretsiz ve açık kaynak. Windows, Linux ve telefon tarayıcıları.",
 
-    "why.1": "<b>USB bellek yok.</b> Dosyayı odanın bir ucundan öbürüne taşımayın, ağdan gönderin.",
-    "why.2": "<b>Paylaşılan klasör yok.</b> Kurulacak bir şey, çözülecek izin karmaşası yok.",
-    "why.3": "<b>Yükle-indir yok.</b> Bir metre öteye gitmek için dosya ağınızdan çıkmaz.",
+    "why.1": "Hesap yok",
+    "why.2": "Bulut yok",
+    "why.3": "Şifreli aktarım",
+
+    "demo.kicker": "Küçük bir deneme",
+    "demo.local": "Yerel ağ",
+    "demo.title": "Hadi, bir pasla.",
+    "demo.computer": "Bilgisayarın",
+    "demo.phone": "Telefonun",
+    "demo.file": "Dosya",
+    "demo.text": "Metin",
+    "demo.note": "Etkileşimli demo. Hiçbir şey yüklenmez.",
+    "demo.ready": "Eşleşti, hazır.",
+    "demo.offer": "Şimdi telefondan indirmeyi dene.",
+    "demo.sending": "Yerel ağdan aktarılıyor…",
+    "demo.done": "Telefonuna ulaştı. İşte bu kadar.",
+    "demo.sendFile": "Demo dosyasını gönder",
+    "demo.sendText": "Demo metnini gönder",
+    "demo.downloadFile": "Telefona indir",
+    "demo.replay": "Tekrar dene",
+    "demo.fileDescription": "24 MB · 3 dosya",
+    "demo.message": "Saat 18.00'de buluşalım mı?",
+    "demo.textDescription": "Karşı ekranda kopyalanacak bir not",
+
+    "preview.desktop": "Bilgisayar",
+    "preview.phone": "Telefon",
+    "preview.pairing": "Bağlantı",
+    "preview.real": "Uygulamanın kendisi.",
+    "preview.open": "Tam görüntüyü aç",
+    "preview.title": "Pasla'nın içinden",
+    "preview.close": "Kapat",
 
     "how.title": "Nasıl çalışır",
     "how.lede": "İlk seferde üç adım. Sonrasında sadece sürükleyip bırakın.",
@@ -36,7 +64,7 @@
 
     "phones.title": "Telefonlar da, uygulamasız",
     "phones.p1": "Bilgisayarda <b>Telefonu bağla</b>'ya basıp QR kodu okutun. İki ekranda da aynı 4 haneli numara çıkar; aynıysa bilgisayarda izin verin.",
-    "phones.p2": "Artık telefondan bilgisayara fotoğraf, dosya ve metin gönderebilir, bilgisayarın gönderdiklerini indirebilirsiniz. iPhone'da da Android'de de zaten kullandığınız tarayıcıda çalışır.",
+    "phones.p2": "Zaten kullandığınız tarayıcıdan iki yöne de fotoğraf, dosya ve metin gönderin. iPhone'da da Android'de de çalışır.",
     "phones.l1": "Telefona hiçbir şey kurulmaz",
     "phones.l2": "Telefon portu yalnızca gerektiğinde açılır",
     "phones.l3": "Kullanılmayan telefonun bağlantısı 30 dakika sonra kapanır",
@@ -83,6 +111,9 @@
     "dl.n1": "<b>Windows:</b> Dosyaya çift tıklayın. Arayüz tarayıcıda açılır, saatin yanında bir Pasla simgesi belirir. İlk açılışta güvenlik duvarı sorarsa <b>Özel ağlar</b> için izin verin.",
     "dl.n2": "<b>Linux:</b> <code>chmod +x pasla-linux-amd64 &amp;&amp; ./pasla-linux-amd64</code>",
     "dl.n3": "İndirdiğiniz dosyayı <a href=\"https://github.com/temurcanbulut/pasla/releases/tag/v0.4.0-beta.1\">sürüm sayfasındaki</a> <code>SHA256SUMS.txt</code> ile karşılaştırabilir ya da Go ile <a href=\"https://github.com/temurcanbulut/pasla/blob/main/README.tr.md\">kendiniz derleyebilirsiniz</a>.",
+    "dl.setup": "Linux / Kali: hızlı başlangıç",
+    "dl.setupIntro": "x86_64 (amd64) bir cihazda bu komutları terminale yapıştırın. Program yalnızca SHA256 doğrulaması başarılıysa başlar. Root ya da Go kurulumu gerekmez.",
+    "dl.setupNetwork": "Terminali açık tutun. Aynı yerel ağdaki diğer bilgisayarda da Pasla'yı açın, iki ekrandaki eşleştirme kodunu karşılaştırın ve iki yöne de küçük bir dosya gönderin. Sanal makinede otomatik keşif için ağ bağdaştırıcısını köprü (bridged) modunda kullanın.",
 
     "faq.title": "Sorular",
     "faq.1.q": "Pasla internet bağlantısı istiyor mu?",
@@ -107,10 +138,27 @@
     "foot.note": "Bu site çerez ya da takip aracı kullanmaz. Dil seçiminiz yalnızca tarayıcınızda saklanır.",
   };
 
-  const EN = new Map(); // original English, captured on first switch
+  const EN = new Map(Object.entries({
+    "demo.ready": "Paired and ready.",
+    "demo.offer": "Now download it on the phone.",
+    "demo.sending": "Sending across your network…",
+    "demo.done": "Received on your phone. That's it.",
+    "demo.sendFile": "Send demo file",
+    "demo.sendText": "Send demo text",
+    "demo.downloadFile": "Download on phone",
+    "demo.replay": "Try again",
+    "demo.fileDescription": "24 MB · 3 files",
+    "demo.message": "Meet at 18:00?",
+    "demo.textDescription": "A note to copy on the other screen",
+  }));
   const meta = document.querySelector('meta[name="description"]');
   const isLinux = /Linux|X11/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent);
   let lang = "en";
+  let demoState = "ready";
+  let demoKind = "file";
+  let preview = "desktop";
+  let transferTimer;
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
 
   function stored() {
     try { return localStorage.getItem("pasla.site.lang"); } catch { return null; }
@@ -141,9 +189,110 @@
       if (!link.dataset.hrefEn) link.dataset.hrefEn = link.getAttribute("href");
       link.href = lang === "tr" ? link.dataset.hrefTr : link.dataset.hrefEn;
     });
+    document.querySelectorAll("[data-label-tr]").forEach((el) => {
+      if (!el.dataset.labelEn) el.dataset.labelEn = el.getAttribute("aria-label");
+      el.setAttribute("aria-label", lang === "tr" ? el.dataset.labelTr : el.dataset.labelEn);
+    });
     document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
     downloadButton();
+    updateDemo();
+    updatePreview();
   }
+
+  // This demo never reads a real file or makes a network request.
+  const demo = document.getElementById("demo");
+  const demoAction = document.getElementById("demo-action");
+  const demoProgress = demo.querySelector('[role="progressbar"]');
+
+  function updateDemo() {
+    demo.dataset.state = demoState;
+    demo.dataset.kind = demoKind;
+    document.getElementById("demo-filename").textContent = demoKind === "file" ? "photos.zip" : text("demo.message");
+    document.getElementById("demo-description").textContent = text("demo." + (demoKind === "file" ? "fileDescription" : "textDescription"));
+    document.getElementById("demo-status").textContent = text("demo." + demoState);
+    const action = demoState === "ready" ? (demoKind === "file" ? "sendFile" : "sendText") :
+      demoState === "offer" ? "downloadFile" : demoState === "sending" ? "sending" : "replay";
+    document.getElementById("demo-action-label").textContent = text("demo." + action);
+    demoAction.disabled = demoState === "sending";
+    demo.querySelectorAll("[data-demo-kind]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.demoKind === demoKind));
+      button.disabled = demoState === "offer" || demoState === "sending";
+    });
+  }
+
+  function progress(value) {
+    demoProgress.setAttribute("aria-valuenow", String(value));
+    demoProgress.firstElementChild.style.width = value + "%";
+    document.getElementById("demo-percent").textContent = value + "%";
+  }
+
+  function finishTransfer() {
+    clearInterval(transferTimer);
+    demoState = "done";
+    progress(100);
+    updateDemo();
+  }
+
+  demoAction.addEventListener("click", () => {
+    if (demoState === "ready" && demoKind === "file") demoState = "offer";
+    else if (demoState === "done") { demoState = "ready"; progress(0); }
+    else if (demoState === "offer" || demoState === "ready") {
+      demoState = "sending";
+      if (motion.matches) { finishTransfer(); return; }
+      const started = performance.now();
+      transferTimer = setInterval(() => {
+        const value = Math.min(100, Math.round((performance.now() - started) / 24));
+        progress(value);
+        if (value === 100) finishTransfer();
+      }, 80);
+    }
+    updateDemo();
+  });
+  demo.querySelectorAll("[data-demo-kind]").forEach((button) => button.addEventListener("click", () => {
+    demoKind = button.dataset.demoKind;
+    demoState = "ready";
+    progress(0);
+    updateDemo();
+  }));
+  motion.addEventListener("change", () => {
+    if (motion.matches && demoState === "sending") finishTransfer();
+  });
+  demo.querySelector(".demo-modes").hidden = false;
+  demoAction.hidden = false;
+
+  const previewLink = document.getElementById("preview-open");
+  const screenshotDialog = document.querySelector(".screenshot-dialog");
+  const fullScreenshot = document.getElementById("screenshot-full");
+
+  function updatePreview() {
+    document.querySelectorAll(".preview-screen").forEach((screen) => { screen.hidden = screen.id !== "preview-" + preview; });
+    document.querySelectorAll("[data-preview]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.preview === preview));
+    });
+    const image = document.querySelector("#preview-" + preview + " img");
+    previewLink.href = image.src;
+    if (screenshotDialog.open) {
+      fullScreenshot.src = image.src;
+      fullScreenshot.alt = image.alt;
+    }
+  }
+  document.querySelectorAll("[data-preview]").forEach((button) => button.addEventListener("click", () => {
+    preview = button.dataset.preview;
+    updatePreview();
+  }));
+  document.querySelector(".preview-tabs").hidden = false;
+  previewLink.addEventListener("click", (event) => {
+    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || typeof screenshotDialog.showModal !== "function") return;
+    event.preventDefault();
+    const image = document.querySelector("#preview-" + preview + " img");
+    fullScreenshot.src = image.src;
+    fullScreenshot.alt = image.alt;
+    screenshotDialog.showModal();
+    document.body.classList.add("previewing");
+  });
+  screenshotDialog.querySelector(".dialog-close").addEventListener("click", () => screenshotDialog.close());
+  screenshotDialog.addEventListener("click", (event) => { if (event.target === screenshotDialog) screenshotDialog.close(); });
+  screenshotDialog.addEventListener("close", () => document.body.classList.remove("previewing"));
 
   function downloadButton() {
     const label = document.getElementById("dl-main-label");
@@ -166,5 +315,5 @@
   const prefersTr = (navigator.languages || [navigator.language || ""]).some((l) => /^tr\b/i.test(l));
   const first = asked || stored() || (prefersTr ? "tr" : "en");
   if (first === "tr") apply("tr");
-  else downloadButton();
+  else { downloadButton(); updateDemo(); updatePreview(); }
 })();
