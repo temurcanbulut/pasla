@@ -25,25 +25,6 @@
     "why.2": "Bulut yok",
     "why.3": "Şifreli aktarım",
 
-    "demo.kicker": "Küçük bir deneme",
-    "demo.local": "Yerel ağ",
-    "demo.title": "Hadi, bir pasla.",
-    "demo.computer": "Bilgisayarın",
-    "demo.phone": "Telefonun",
-    "demo.file": "Dosya",
-    "demo.text": "Metin",
-    "demo.note": "Etkileşimli demo. Hiçbir şey yüklenmez.",
-    "demo.ready": "Eşleşti, hazır.",
-    "demo.offer": "Şimdi telefondan indirmeyi dene.",
-    "demo.sending": "Yerel ağdan aktarılıyor…",
-    "demo.done": "Telefonuna ulaştı. İşte bu kadar.",
-    "demo.sendFile": "Demo dosyasını gönder",
-    "demo.sendText": "Demo metnini gönder",
-    "demo.downloadFile": "Telefona indir",
-    "demo.replay": "Tekrar dene",
-    "demo.fileDescription": "24 MB · 3 dosya",
-    "demo.message": "Saat 18.00'de buluşalım mı?",
-    "demo.textDescription": "Karşı ekranda kopyalanacak bir not",
 
     "preview.desktop": "Bilgisayar",
     "preview.phone": "Telefon",
@@ -138,27 +119,11 @@
     "foot.note": "Bu site çerez ya da takip aracı kullanmaz. Dil seçiminiz yalnızca tarayıcınızda saklanır.",
   };
 
-  const EN = new Map(Object.entries({
-    "demo.ready": "Paired and ready.",
-    "demo.offer": "Now download it on the phone.",
-    "demo.sending": "Sending across your network…",
-    "demo.done": "Received on your phone. That's it.",
-    "demo.sendFile": "Send demo file",
-    "demo.sendText": "Send demo text",
-    "demo.downloadFile": "Download on phone",
-    "demo.replay": "Try again",
-    "demo.fileDescription": "24 MB · 3 files",
-    "demo.message": "Meet at 18:00?",
-    "demo.textDescription": "A note to copy on the other screen",
-  }));
+  const EN = new Map();
   const meta = document.querySelector('meta[name="description"]');
   const isLinux = /Linux|X11/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent);
   let lang = "en";
-  let demoState = "ready";
-  let demoKind = "file";
   let preview = "desktop";
-  let transferTimer;
-  const motion = matchMedia("(prefers-reduced-motion: reduce)");
 
   function stored() {
     try { return localStorage.getItem("pasla.site.lang"); } catch { return null; }
@@ -195,70 +160,8 @@
     });
     document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
     downloadButton();
-    updateDemo();
     updatePreview();
   }
-
-  // This demo never reads a real file or makes a network request.
-  const demo = document.getElementById("demo");
-  const demoAction = document.getElementById("demo-action");
-  const demoProgress = demo.querySelector('[role="progressbar"]');
-
-  function updateDemo() {
-    demo.dataset.state = demoState;
-    demo.dataset.kind = demoKind;
-    document.getElementById("demo-filename").textContent = demoKind === "file" ? "photos.zip" : text("demo.message");
-    document.getElementById("demo-description").textContent = text("demo." + (demoKind === "file" ? "fileDescription" : "textDescription"));
-    document.getElementById("demo-status").textContent = text("demo." + demoState);
-    const action = demoState === "ready" ? (demoKind === "file" ? "sendFile" : "sendText") :
-      demoState === "offer" ? "downloadFile" : demoState === "sending" ? "sending" : "replay";
-    document.getElementById("demo-action-label").textContent = text("demo." + action);
-    demoAction.disabled = demoState === "sending";
-    demo.querySelectorAll("[data-demo-kind]").forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.demoKind === demoKind));
-      button.disabled = demoState === "offer" || demoState === "sending";
-    });
-  }
-
-  function progress(value) {
-    demoProgress.setAttribute("aria-valuenow", String(value));
-    demoProgress.firstElementChild.style.width = value + "%";
-    document.getElementById("demo-percent").textContent = value + "%";
-  }
-
-  function finishTransfer() {
-    clearInterval(transferTimer);
-    demoState = "done";
-    progress(100);
-    updateDemo();
-  }
-
-  demoAction.addEventListener("click", () => {
-    if (demoState === "ready" && demoKind === "file") demoState = "offer";
-    else if (demoState === "done") { demoState = "ready"; progress(0); }
-    else if (demoState === "offer" || demoState === "ready") {
-      demoState = "sending";
-      if (motion.matches) { finishTransfer(); return; }
-      const started = performance.now();
-      transferTimer = setInterval(() => {
-        const value = Math.min(100, Math.round((performance.now() - started) / 24));
-        progress(value);
-        if (value === 100) finishTransfer();
-      }, 80);
-    }
-    updateDemo();
-  });
-  demo.querySelectorAll("[data-demo-kind]").forEach((button) => button.addEventListener("click", () => {
-    demoKind = button.dataset.demoKind;
-    demoState = "ready";
-    progress(0);
-    updateDemo();
-  }));
-  motion.addEventListener("change", () => {
-    if (motion.matches && demoState === "sending") finishTransfer();
-  });
-  demo.querySelector(".demo-modes").hidden = false;
-  demoAction.hidden = false;
 
   const previewLink = document.getElementById("preview-open");
   const screenshotDialog = document.querySelector(".screenshot-dialog");
@@ -315,5 +218,5 @@
   const prefersTr = (navigator.languages || [navigator.language || ""]).some((l) => /^tr\b/i.test(l));
   const first = asked || stored() || (prefersTr ? "tr" : "en");
   if (first === "tr") apply("tr");
-  else { downloadButton(); updateDemo(); updatePreview(); }
+  else { downloadButton(); updatePreview(); }
 })();
