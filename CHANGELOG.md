@@ -2,6 +2,18 @@
 
 [Türkçe](CHANGELOG.tr.md)
 
+## 0.4.2
+
+### Security
+
+- Preserve existing files when receiving a transfer: create exclusive, unique temporary files and reject completed-destination collisions between this node's receivers.
+- Cover existing partial/final files, failed checksums and concurrent incoming transfers with regression tests.
+- Pin workflow actions and govulncheck; keep release builds read-only and grant write access only to the separate publication job.
+
+### Release
+
+- Publish v0.4.2-beta.1 binaries for Windows/Linux amd64 and arm64, built locally with Go 1.27.3. Earlier beta binaries are superseded by this security update.
+
 ## 0.4.1
 
 ### Security

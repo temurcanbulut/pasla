@@ -2,6 +2,18 @@
 
 [English](CHANGELOG.md)
 
+## 0.4.2
+
+### Güvenlik
+
+- Gelen aktarım mevcut dosyaları korur: benzersiz geçici dosyalar dışlayıcı oluşturulur; aynı Node'un alıcıları tamamlanmış hedefleri ezmez.
+- Mevcut geçici/hedef dosyaları, hatalı sağlama özeti ve eşzamanlı aktarımlar için regresyon testleri eklendi.
+- Workflow eylemleri ve govulncheck sabitlendi; release derlemesi salt okunur, yazma yetkisi yalnızca ayrı yayımlama işinde.
+
+### Yayın
+
+- Windows/Linux amd64 ve arm64 için Go 1.27.3 ile yerelde derlenen v0.4.2-beta.1 dosyaları. Önceki beta dosyaları yerine bu güvenlik güncellemesi kullanılmalı.
+
 ## 0.4.1
 
 ### Güvenlik
