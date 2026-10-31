@@ -91,7 +91,7 @@
     "dl.phone.p": "İndirilecek bir şey yok. Pasla çalışan bir bilgisayarın gösterdiği QR kodu okutun.",
     "dl.n1": "<b>Windows:</b> Dosyaya çift tıklayın. Arayüz tarayıcıda açılır, saatin yanında bir Pasla simgesi belirir. İlk açılışta güvenlik duvarı sorarsa <b>Özel ağlar</b> için izin verin.",
     "dl.n2": "<b>Linux:</b> <code>chmod +x pasla-linux-amd64 &amp;&amp; ./pasla-linux-amd64</code>",
-    "dl.n3": "İndirdiğiniz dosyayı <a href=\"https://github.com/temurcanbulut/pasla/releases/tag/v0.4.1-beta.1\">sürüm sayfasındaki</a> <code>SHA256SUMS.txt</code> ile karşılaştırabilir ya da Go ile <a href=\"https://github.com/temurcanbulut/pasla/blob/main/README.tr.md\">kendiniz derleyebilirsiniz</a>.",
+    "dl.n3": "İndirdiğiniz dosyayı <a href=\"https://github.com/temurcanbulut/pasla/releases/tag/v0.4.2-beta.1\">sürüm sayfasındaki</a> <code>SHA256SUMS.txt</code> ile karşılaştırabilir ya da Go ile <a href=\"https://github.com/temurcanbulut/pasla/blob/main/README.tr.md\">kendiniz derleyebilirsiniz</a>.",
     "dl.setup": "Linux / Kali: hızlı başlangıç",
     "dl.setupIntro": "x86_64 (amd64) bir cihazda bu komutları terminale yapıştırın. Program yalnızca SHA256 doğrulaması başarılıysa başlar. Root ya da Go kurulumu gerekmez.",
     "dl.setupNetwork": "Terminali açık tutun. Aynı yerel ağdaki diğer bilgisayarda da Pasla'yı açın, iki ekrandaki eşleştirme kodunu karşılaştırın ve iki yöne de küçük bir dosya gönderin. Sanal makinede otomatik keşif için ağ bağdaştırıcısını köprü (bridged) modunda kullanın.",
@@ -200,7 +200,7 @@
   function downloadButton() {
     const label = document.getElementById("dl-main-label");
     if (!isLinux || !label) return;
-    document.getElementById("dl-main").href = "https://github.com/temurcanbulut/pasla/releases/download/v0.4.1-beta.1/pasla-linux-amd64";
+    document.getElementById("dl-main").href = "https://github.com/temurcanbulut/pasla/releases/download/v0.4.2-beta.1/pasla-linux-amd64";
     if (!EN.has("hero.dlLinux")) EN.set("hero.dlLinux", "Download for Linux");
     label.dataset.i = "hero.dlLinux";
     label.innerHTML = text("hero.dlLinux");
