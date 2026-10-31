@@ -2,6 +2,16 @@
 
 [Türkçe](CHANGELOG.tr.md)
 
+## 0.4.1
+
+### Security
+
+- Require Go 1.27.3 or newer for source builds and rebuild release binaries with the corrected standard library. This addresses [GO-2026-6809](https://pkg.go.dev/vuln/GO-2026-6809) / CVE-2026-111943 in crypto/x509, which adds distrust checks for known compromised intermediate certificates.
+
+### Maintenance
+
+- Update GitHub Actions checkout to v7, setup-go to v7, configure-pages to v6, upload-pages-artifact to v5 and deploy-pages to v5, incorporating Dependabot PRs #1–#5.
+
 ## 0.4.0
 
 ### Added
