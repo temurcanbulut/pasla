@@ -2,6 +2,16 @@
 
 [English](CHANGELOG.md)
 
+## 0.4.1
+
+### Güvenlik
+
+- Kaynaktan derleme için Go 1.27.3 veya üzerini zorunlu tut; yayın dosyalarını düzeltilmiş standart kütüphaneyle yeniden derle. crypto/x509 içindeki, güveni kaldırılan bilinen ara sertifikalara ilişkin [GO-2026-6809](https://pkg.go.dev/vuln/GO-2026-6809) / CVE-2026-111943 güncellemesini içerir.
+
+### Bakım
+
+- Dependabot #1–#5 güncellemeleri: checkout v7, setup-go v7, configure-pages v6, upload-pages-artifact v5 ve deploy-pages v5.
+
 ## 0.4.0
 
 ### Yeni

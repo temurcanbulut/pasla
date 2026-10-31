@@ -163,7 +163,7 @@ Yönlendiriciler UDP yayınlarını alt ağlar arasında taşımaz. Cihazlar far
 
 ## Kaynaktan derleme
 
-Go 1.22 veya üstü gerekir; başka bağımlılık yoktur (QR kodlayıcı dahil her şey standart kütüphaneyle yazıldı).
+Go 1.27.3 veya üstü gerekir; başka bağımlılık yoktur (QR kodlayıcı dahil her şey standart kütüphaneyle yazıldı).
 
 ```sh
 git clone https://github.com/temurcanbulut/pasla.git

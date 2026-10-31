@@ -165,7 +165,7 @@ Routers don't forward broadcasts between subnets. For devices on another subnet,
 
 ## Build from source
 
-Go 1.22 or newer; nothing else. Everything, the QR encoder included, uses only the standard library.
+Go 1.27.3 or newer; nothing else. Everything, the QR encoder included, uses only the standard library.
 
 ```sh
 git clone https://github.com/temurcanbulut/pasla.git
