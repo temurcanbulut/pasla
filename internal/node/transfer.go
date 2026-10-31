@@ -508,18 +508,20 @@ func (n *Node) receiveFile(t *Transfer, i int, dest string, body io.Reader, want
 	if err := os.MkdirAll(filepath.Dir(dest), 0o755); err != nil {
 		return i18n.E("could not create the folder: %v", err)
 	}
-	tmp := dest + ".paslapart"
-	f, err := os.OpenFile(tmp, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o644)
+	// CreateTemp uses exclusive creation: an incoming name must never truncate
+	// an existing user file or another transfer's partial download.
+	f, err := os.CreateTemp(filepath.Dir(dest), ".pasla-*.part")
 	if err != nil {
 		return i18n.E("could not write the file: %v", err)
 	}
+	tmp := f.Name()
+	defer os.Remove(tmp)
 	h := sha256.New()
 	buf := make([]byte, 1<<20)
 	var counted atomic.Int64
 	written, err := io.CopyBuffer(io.MultiWriter(f, h, countingWriter{t, &counted}), io.LimitReader(body, size+1), buf)
 	cerr := f.Close()
 	fail := func(e error) error {
-		os.Remove(tmp)
 		t.done.Add(-counted.Load())
 		return e
 	}
@@ -543,11 +545,26 @@ func (n *Node) receiveFile(t *Transfer, i int, dest string, body io.Reader, want
 			return fail(i18n.E("%s: integrity check failed", t.Files[i].Name))
 		}
 	}
-	if err := os.Rename(tmp, dest); err != nil {
+	if err := n.commitReceivedFile(tmp, dest); err != nil {
 		return fail(i18n.E("could not save the file: %v", err))
 	}
 	markFromNetwork(dest)
 	return nil
+}
+
+// Serialise the final existence check and rename across this node's receivers.
+// A destination selected while another transfer was active must not overwrite
+// that transfer's completed file. Local processes must not mutate ReceiveDir
+// concurrently; this mutex does not lock other processes' filesystem access.
+func (n *Node) commitReceivedFile(tmp, dest string) error {
+	n.mu.Lock()
+	defer n.mu.Unlock()
+	if _, err := os.Lstat(dest); err == nil {
+		return fs.ErrExist
+	} else if !errors.Is(err, fs.ErrNotExist) {
+		return err
+	}
+	return os.Rename(tmp, dest)
 }
 
 func (n *Node) hRemoteCancel(w http.ResponseWriter, r *http.Request) {
