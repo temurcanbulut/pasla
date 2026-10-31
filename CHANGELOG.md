@@ -12,6 +12,7 @@
 
 ### Release
 
+- v0.4.2-beta.2 adds immutable GitHub release assets and a verifiable release attestation. Application behavior is unchanged from the patched beta.1 release.
 - Publish v0.4.2-beta.1 binaries for Windows/Linux amd64 and arm64, built locally with Go 1.27.3. Earlier beta binaries are superseded by this security update.
 
 ## 0.4.1

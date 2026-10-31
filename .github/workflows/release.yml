@@ -56,9 +56,16 @@ jobs:
           path: dist
       - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
+          draft: true
           body_path: dist/release-notes.md
           prerelease: ${{ contains(github.ref_name, '-') }}
           fail_on_unmatched_files: true
           files: |
             dist/pasla-*
             dist/SHA256SUMS.txt
+      - name: Publish the fully uploaded draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: gh release edit --draft=false -- "$RELEASE_TAG"

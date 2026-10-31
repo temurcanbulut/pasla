@@ -12,6 +12,7 @@
 
 ### Yayın
 
+- v0.4.2-beta.2, değişmez GitHub release dosyaları ve doğrulanabilir yayın attestation kaydı ekler. Uygulama davranışı yamalı beta.1 sürümüyle aynıdır.
 - Windows/Linux amd64 ve arm64 için Go 1.27.3 ile yerelde derlenen v0.4.2-beta.1 dosyaları. Önceki beta dosyaları yerine bu güvenlik güncellemesi kullanılmalı.
 
 ## 0.4.1
