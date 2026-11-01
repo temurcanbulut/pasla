@@ -39,7 +39,7 @@ If you have a few computers on one network, moving files usually means a USB sti
 | Threat | What Pasla does |
 |---|---|
 | Someone listening on the network | Device-to-device traffic is mutual TLS 1.3; phone traffic is TLS |
-| Someone in the middle | Pairing compares a committed 6-digit code; afterwards every connection pins the certificate fingerprint |
+| Someone in the middle of desktop pairing | Pairing compares a committed 6-digit code; afterwards every connection pins the certificate fingerprint |
 | A device posing as another | Identity is the fingerprint, not the name. An unpaired device using a paired device's name is flagged in red |
 | Pairing-request spam | A declined device and IP wait 30 s, then exponentially up to 15 min; at most 6 requests per source IP per minute |
 | Files you did not want | Every transfer asks first by default. Executables (exe, msi, ps1, bat, sh…) are flagged on the accept card |
@@ -74,7 +74,7 @@ sha256sum -c SHA256SUMS.txt --ignore-missing               # Linux
 
 **Windows:** double-click the file. No console window opens: the interface appears in your browser and a Pasla icon sits in the notification area next to the clock. Click it to reopen the interface; right-click it to quit. The first time, Windows Firewall asks for permission; tick **Private networks** and allow.
 
-> Like any new, unsigned program, Pasla may get a SmartScreen warning or a false positive from some AI-based antivirus engines at first. All the source is in this repository and you can [build it yourself](#build-from-source).
+> Windows may warn about unsigned binaries. Review the public source and release provenance before running; checksums verify bytes, and you can [build from source](#build-from-source).
 
 **Linux:**
 

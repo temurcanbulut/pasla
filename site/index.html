@@ -187,11 +187,11 @@
     <div class="sec-list">
       <details open>
         <summary data-i="sec.1.t">Encrypted</summary>
-        <p data-i="sec.1.p">Computers talk over mutual TLS 1.3; phones over TLS. Nobody on the network can read what you send.</p>
+        <p data-i="sec.1.p">Desktop peers use mutual TLS 1.3 with fingerprint checks. Phones use TLS, but the browser bootstrap needs a trusted LAN against active interception.</p>
       </details>
       <details>
         <summary data-i="sec.2.t">Verified pairing</summary>
-        <p data-i="sec.2.p">You compare a 6-digit code on both screens once. After that, every connection checks the other device's certificate fingerprint, not its name or IP.</p>
+        <p data-i="sec.2.p">Desktop pairing compares a 6-digit code on both screens. Later desktop connections check the certificate fingerprint, not the device name or IP.</p>
       </details>
       <details>
         <summary data-i="sec.3.t">Nothing outside the folder</summary>
@@ -203,7 +203,7 @@
       </details>
       <details>
         <summary data-i="sec.5.t">Hard to guess, quick to expire</summary>
-        <p data-i="sec.5.p">A phone's QR key lasts 10 minutes, dies after 8 wrong guesses, and each phone is also approved on the computer.</p>
+        <p data-i="sec.5.p">A phone QR expires after 10 minutes and is consumed once. Guess throttling is per source IP; every phone still needs desktop approval. The browser channel requires a trusted LAN against active interception.</p>
       </details>
       <details>
         <summary data-i="sec.6.t">No accounts, no tracking</summary>
@@ -268,7 +268,7 @@ chmod +x pasla-linux-amd64 &amp;&amp;
     </details>
     <details>
       <summary data-i="faq.3.q">Windows warns me about the file. Is it safe?</summary>
-      <p data-i="faq.3.a">New programs that are not code-signed often get a SmartScreen warning at first, and some AI-based antivirus engines guess wrong about them. All the source is public: you can check the file against <code>SHA256SUMS.txt</code> or build it yourself.</p>
+      <p data-i="faq.3.a">Windows may warn about unsigned binaries. Review the public source and release provenance before running; <code>SHA256SUMS.txt</code> verifies the downloaded bytes.</p>
     </details>
     <details>
       <summary data-i="faq.4.q">Why does my phone say the connection is not private?</summary>
