@@ -1,9 +1,17 @@
 name: Release
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: New release tag (exact tested main source; no existing assets replaced)
+        required: true
+        type: string
   push:
     tags: ["v*"]
 
+env:
+  RELEASE_TAG: ${{ inputs.version || github.ref_name }}
 permissions:
   contents: read
   actions: read
@@ -16,6 +24,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+      - name: Validate release tag
+        run: python -c "import os,re; assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+(?:-[a-z0-9]+(?:\.[a-z0-9]+)*)?', os.environ['RELEASE_TAG'])"
       - name: Require green CI for this exact commit
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -34,11 +44,11 @@ jobs:
           go-version-file: go.mod
           cache: false
       - run: go test -count=1 ./...
-      - run: make release VERSION="${GITHUB_REF_NAME}"
+      - run: make release VERSION="$RELEASE_TAG"
       - name: Extract release notes from the English changelog
         shell: bash
         run: |
-          version="${GITHUB_REF_NAME#v}"
+          version="${RELEASE_TAG#v}"
           version="${version%%-*}"
           awk -v heading="## $version" '
             $0 == heading { found = 1; next }
@@ -69,9 +79,11 @@ jobs:
           path: dist
       - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          target_commitish: ${{ github.sha }}
           draft: true
           body_path: dist/release-notes.md
-          prerelease: ${{ contains(github.ref_name, '-') }}
+          prerelease: ${{ contains(env.RELEASE_TAG, '-') }}
           fail_on_unmatched_files: true
           files: |
             dist/pasla-*
@@ -80,5 +92,4 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_TAG: ${{ github.ref_name }}
         run: gh release edit --draft=false -- "$RELEASE_TAG"
