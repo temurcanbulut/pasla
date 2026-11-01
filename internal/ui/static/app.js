@@ -154,6 +154,7 @@ function connect() {
       case "message": onMessage(ev.data); break;
       case "paired": onPaired(ev.data); scheduleLoad(); break;
       case "attention": onAttention(ev.data); break;
+      case "peer-renamed": toast(t("Paired device renamed: {old} → {name}", ev.data)); scheduleLoad(); break;
       default: scheduleLoad();
     }
   };

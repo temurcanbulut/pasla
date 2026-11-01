@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <b>Send files and text between your computers and phones on the local network. Offline, encrypted, one file.</b><br>
+  <b>Share files over your LAN with verified desktop pairing and no phone app.</b><br>
   No account, no cloud, no install. Windows · Linux · any phone browser.<br>
   <a href="https://temurcanbulut.github.io/pasla/">Website</a> · <a href="README.tr.md">Türkçe</a>
 </p>
@@ -41,14 +41,14 @@ If you have a few computers on one network, moving files usually means a USB sti
 | Someone listening on the network | Device-to-device traffic is mutual TLS 1.3; phone traffic is TLS |
 | Someone in the middle | Pairing compares a committed 6-digit code; afterwards every connection pins the certificate fingerprint |
 | A device posing as another | Identity is the fingerprint, not the name. An unpaired device using a paired device's name is flagged in red |
-| Pairing-request spam | A declined device and IP wait 30 s, then exponentially up to 15 min; at most 6 requests a minute |
+| Pairing-request spam | A declined device and IP wait 30 s, then exponentially up to 15 min; at most 6 requests per source IP per minute |
 | Files you did not want | Every transfer asks first by default. Executables (exe, msi, ps1, bat, sh…) are flagged on the accept card |
 | Opening a malicious file on Windows | Received files get the Mark of the Web, like browser downloads, so SmartScreen and Office Protected View step in |
 | Writing outside the folder | Incoming names are sanitised (`..`, absolute paths, names Windows forbids); this code is fuzz-tested |
 | Filling the disk | Offers that don't fit are refused up front; 256 MB is always left free |
 | Other users or programs on the same computer | The local interface needs a session secret. The browser signs in with a one-time, two-minute code; the secret sits in a file only you can read |
 | Other websites in your browser | `Host` and `Origin` checks, SameSite=Strict cookies, a strict Content Security Policy |
-| Someone who sees the QR code | The phone key expires in 10 minutes or after 8 wrong guesses, and every phone is also approved on the computer with a 4-digit number |
+| Someone who sees the QR code | The phone key expires in 10 minutes, is consumed once, and every phone needs desktop approval; source-IP throttling limits guesses |
 
 Details: [docs/PROTOCOL.md](docs/PROTOCOL.md) (protocol and threat model) · Reporting a vulnerability: [SECURITY.md](SECURITY.md)
 

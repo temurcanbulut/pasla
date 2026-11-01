@@ -32,6 +32,7 @@ var riskyExt = map[string]bool{
 	".psm1": true, ".reg": true, ".dll": true, ".sys": true, ".iso": true, ".img": true, ".vhd": true,
 	".vhdx": true, ".docm": true, ".xlsm": true, ".pptm": true, ".sh": true, ".run": true,
 	".appimage": true, ".deb": true, ".rpm": true, ".desktop": true,
+	".chm": true, ".msp": true, ".mst": true, ".cab": true, ".application": true, ".appref-ms": true, ".scf": true, ".library-ms": true, ".search-ms": true, ".settingcontent-ms": true, ".xll": true, ".xlam": true, ".dotm": true, ".py": true, ".pyw": true, ".ps2": true,
 }
 
 func isRisky(name string) bool {

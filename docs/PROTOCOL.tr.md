@@ -74,7 +74,7 @@ A başlatır, B yanıtlar. TLS sayesinde ikisi de karşısındakinin parmak izin
 Telefon bir uygulama kurmaz; bilgisayarın sunduğu sayfayı tarayıcıda açar.
 
 1. Bilgisayarda kullanıcı **Telefonu bağla**'ya bastığında port açılır ve 128 bitlik rastgele bir anahtar üretilir. QR kod `https://<ip>:47823/#k=<anahtar>` adresini taşır. Anahtar adresin `#` sonrasındadır; tarayıcılar bu kısmı ağ üzerinden göndermez, sunucu kayıtlarına da düşmez.
-2. Sayfa anahtarı bir kez `POST /p/login` ile yollar. Anahtar 10 dakika geçerlidir ve 8 yanlış denemeden sonra iptal edilir. Doğruysa telefona `HttpOnly; Secure; SameSite=Strict` bir oturum çerezi ve 4 haneli bir kontrol numarası verilir.
+2. Sayfa anahtarı bir kez `POST /p/login` ile yollar. Anahtar 10 dakika geçerlidir ve ilk başarılı girişte tüketilir. Kaynak IP başına dakikada 8 deneme sınırı vardır; yanlış denemeler başka telefonun QR kodunu iptal etmez. Doğruysa telefona `HttpOnly; Secure; SameSite=Strict` bir oturum çerezi ve 4 haneli bir kontrol numarası verilir.
 3. Bilgisayar "X bağlanmak istiyor, numara 1234" der. Kullanıcı, telefondaki numara aynıysa izin verir. O ana kadar telefon yalnızca kendi durumunu okuyabilir.
 4. Onaylı telefon `/p/api/offer` + `/p/api/upload/{id}/{i}` ile bilgisayara dosya gönderir, `/p/api/outbox/{id}` ile bilgisayarın hazırladıklarını indirir, `/p/api/message` ile metin yollar.
 
@@ -88,3 +88,11 @@ Arayüz aynı programın içinden sunulur. JSON API'si `/api/*` altındadır; ca
 
 - **Oturum:** Program her açılışta rastgele bir oturum anahtarı üretir ve ayar klasöründeki `ui.token` dosyasına (izinler `0600`) yazar. API, bu anahtarı `X-Pasla-Token` başlığında ya da `pasla_session` çerezinde ister. Tarayıcı anahtarı hiçbir zaman adres çubuğunda görmez: program, tarayıcıyı `/open?c=<kod>` ile açar. Bu kod tek kullanımlıktır, 2 dakikada geçersiz olur ve `HttpOnly; SameSite=Strict` bir çerezle değiştirilir. Böylece aynı bilgisayardaki başka bir kullanıcı ya da program, `127.0.0.1`'e erişebilse bile arayüzü kullanamaz.
 - **Tarayıcı saldırıları:** `Host` başlığı bir geri döngü adı olmalıdır (DNS yeniden bağlama saldırılarına karşı). Durum değiştiren isteklerde `Origin` yoksa ya da arayüzün kendisiyse kabul edilir (siteler arası isteklere karşı). Bunlara ek olarak sıkı bir CSP, `X-Frame-Options: DENY` ve `nosniff` uygulanır.
+
+## İnceleme sonrası — Kasım 2026
+
+UDP keşfi yalnızca doğrulanmamış adres ipucudur. İsim, adres ve son-görülme zamanı ancak iddia edilen parmak izine sabitlenmiş TLS bağlantısından eşleşen `/v1/info` geldikten sonra kayda girer. İmzasız veda paketi yoksayılır; sessiz cihaz zaman aşımıyla görünmez olur. Aynı anda dört probe ve kısa ömürlü 256 adres kovası sınırı vardır. Doğrulanmış eşleşmiş cihaz adı değişince UI bildirim verir. LAN taşırması erişilebilirliği yine etkileyebilir.
+
+Telefon tarayıcısında kendinden imzalı sertifika uyarısını geçmek, aktif LAN MITM'ine karşı sayfayı doğrulamaz. Sahte sayfa QR fragmentini okuyup dört haneli numarayı aktarabilir. Numara yanlışlıkla/QR fotoğrafıyla bağlantıyı azaltır; aktif MITM koruması değildir. Telefon özelliğini güvenilir ağda kullanın veya parmak izi sabitlenen masaüstü eşleşmesini seçin. Aynı sayfanın gösterdiği kısa parmak izi bağımsız doğrulama sayılmaz.
+
+Dosya ve toplam boyutu kayıt oluşturulmadan önce denetlenir; sınır 16 TiB'dır. Boş alan rezervi korunur. Eşzamanlı alımlar üst klasör adlarını kilit altında rezerve eder; dosya oluşturma ayrıca mevcut dosyaların üzerine yazmayı engeller.

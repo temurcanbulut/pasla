@@ -2,6 +2,14 @@
 
 [Türkçe](CHANGELOG.tr.md)
 
+## 0.4.3
+
+- Verify discovery hints with certificate-pinned TLS before changing peer/trust records; ignore unsigned goodbye. Notify on verified renames.
+- Reject overflowing and over-16-TiB offers before transfer registration, on desktop and phone paths.
+- Consume each phone QR once, throttle guesses per source without revoking another phone's QR; document the active-MITM boundary.
+- Scope pairing budgets per source, preserve pending SAS sessions, lock nonce reads and reserve batch folders across concurrent transfers.
+- Expand risky Windows extensions and reserved-name handling, with offline regressions.
+
 ## 0.4.2
 
 ### Security

@@ -411,7 +411,7 @@ func TestPairGuardBurst(t *testing.T) {
 	g := newPairGuard()
 	now := time.Now()
 	for i := 0; i < pairBurst; i++ {
-		if ok, _ := g.allow(fmt.Sprint("fp", i), fmt.Sprint("10.0.0.", i), now); !ok {
+		if ok, _ := g.allow(fmt.Sprint("fp", i), "10.0.0.99", now); !ok {
 			t.Fatalf("%d. istek reddedildi", i)
 		}
 	}
@@ -559,8 +559,8 @@ func TestPhoneFlow(t *testing.T) {
 	}
 }
 
-// Guessing the key is pointless: after a few wrong tries it is revoked.
-func TestPhoneKeyRevokedAfterGuesses(t *testing.T) {
+// Guesses throttle that source, without revoking another user's launch code.
+func TestPhoneKeySurvivesGuesses(t *testing.T) {
 	a := startNode(t, "A")
 	if _, err := a.StartPhone(); err != nil {
 		t.Fatal(err)
@@ -575,8 +575,16 @@ func TestPhoneKeyRevokedAfterGuesses(t *testing.T) {
 		}
 		resp.Body.Close()
 	}
-	if a.phoneView().KeyLive {
-		t.Fatal("anahtar iptal edilmeliydi")
+	if !a.phoneView().KeyLive {
+		t.Fatal("unauthenticated guesses revoked the QR")
+	}
+	resp, err := cl.Post(base, "application/json", strings.NewReader(`{"key":"another-guess"}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusTooManyRequests {
+		t.Fatalf("expected source throttle: %s", resp.Status)
 	}
 }
 

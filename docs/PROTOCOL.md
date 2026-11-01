@@ -74,7 +74,7 @@ A initiates and B responds. TLS gives both sides the other's fingerprint (`fpA`,
 The phone installs no app; it opens the page served by the computer in its browser.
 
 1. When the user clicks **Connect a phone** on the computer, the port opens and a random 128-bit key is generated. The QR code contains `https://<ip>:47823/#k=<key>`. The key is after `#`; browsers do not send this part over the network, so it does not appear in server logs.
-2. The page sends the key once with `POST /p/login`. The key is valid for 10 minutes and is revoked after 8 incorrect attempts. If it is correct, the phone receives an `HttpOnly; Secure; SameSite=Strict` session cookie and a 4-digit check number.
+2. The page sends the key once with `POST /p/login`. The key expires after 10 minutes and is consumed by the first successful login. Eight attempts from one source IP within a minute throttle that source; guesses do not revoke the key. If it is correct, the phone receives an `HttpOnly; Secure; SameSite=Strict` session cookie and a 4-digit check number.
 3. The computer says "X wants to connect, number 1234". The user approves if the number on the phone matches. Until then, the phone can read only its own status.
 4. An approved phone sends files to the computer with `/p/api/offer` + `/p/api/upload/{id}/{i}`, downloads items prepared by the computer with `/p/api/outbox/{id}`, and sends text with `/p/api/message`.
 
@@ -88,3 +88,11 @@ The interface is served by the same program. Its JSON API is under `/api/*`; liv
 
 - **Session:** On every launch, the program generates a random session key and writes it to `ui.token` in the settings directory (permissions `0600`). The API requires this key in the `X-Pasla-Token` header or the `pasla_session` cookie. The browser never sees the key in its address bar: the program opens the browser at `/open?c=<code>`. This code is single-use, expires after 2 minutes and is exchanged for an `HttpOnly; SameSite=Strict` cookie. Thus another user or program on the same computer cannot use the interface even if it can reach `127.0.0.1`.
 - **Browser attacks:** The `Host` header must be a loopback name (against DNS rebinding). Requests that change state are accepted if `Origin` is absent or matches the interface itself (against cross-site requests). A strict CSP, `X-Frame-Options: DENY` and `nosniff` are also applied.
+
+## Review follow-up — November 2026
+
+Discovery UDP is an unauthenticated locator hint. Names, addresses and last-seen timestamps enter the peer/trusted stores only after a TLS certificate pinned to the claimed fingerprint returns matching `/v1/info`. Unsigned goodbye packets are ignored; authenticated peers expire after silence. Discovery work is bounded to four concurrent probes and 256 short-lived endpoint buckets. A verified paired-device rename emits a visible UI notification. LAN flooding remains an availability risk.
+
+The phone browser channel has a different trust boundary from desktop pairing. Bypassing a self-signed browser warning does **not** authenticate the page against an active LAN MITM. A substituted page can read the QR fragment and relay the four-digit check. That check reduces accidental/photographed-QR connections, not active MITM. Use the phone feature only on a trusted network, or use desktop fingerprint-pinned pairing; do not treat a short fingerprint displayed by that same page as independent verification.
+
+Offers reject negative/oversized file or batch totals before registration. The checked cap is 16 TiB, plus the existing free-space reserve check. In-flight batches reserve whole top-level destination names under the node lock; exclusive file creation remains a separate no-clobber layer.

@@ -198,6 +198,11 @@ func (n *Node) probe(ctx context.Context, addr string) (*infoResp, error) {
 }
 
 func (n *Node) probeAs(ctx context.Context, addr string, manual bool) (*infoResp, error) {
+	return n.probeExpected(ctx, addr, manual, "")
+}
+
+// probeExpected binds both the TLS certificate and /v1/info to a discovery claim.
+func (n *Node) probeExpected(ctx context.Context, addr string, manual bool, expected string) (*infoResp, error) {
 	addr, err := normalizeAddr(addr)
 	if err != nil {
 		return nil, err
@@ -205,7 +210,11 @@ func (n *Node) probeAs(ctx context.Context, addr string, manual bool) (*infoResp
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "https://"+addr+"/v1/info", nil)
-	resp, err := n.client("").Do(req)
+	client := n.client(expected)
+	if expected != "" {
+		defer n.dropClient(expected)
+	}
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, friendlyNetErr(err)
 	}
@@ -215,7 +224,7 @@ func (n *Node) probeAs(ctx context.Context, addr string, manual bool) (*infoResp
 		return nil, err
 	}
 	if resp.TLS == nil || len(resp.TLS.PeerCertificates) == 0 ||
-		fingerprint(resp.TLS.PeerCertificates[0].Raw) != info.FP || info.App != "pasla" {
+		fingerprint(resp.TLS.PeerCertificates[0].Raw) != info.FP || (expected != "" && info.FP != expected) || info.App != "pasla" || info.V != protocolVersion {
 		return nil, i18n.E("%s does not look like a Pasla device", addr)
 	}
 	if info.FP == n.fp {

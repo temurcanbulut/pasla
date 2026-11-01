@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <b>İnternete çıkmayan ağlarda bilgisayarlar ve telefonlar arasında şifreli dosya ve metin aktarımı.</b><br>
+  <b>Doğrulanabilir masaüstü eşleşmesiyle yerel ağda dosya paylaş; telefona uygulama kurma.</b><br>
   Tek dosya. Kurulum, hesap ve bulut yok. Windows · Linux · her telefon tarayıcısı.<br>
   <a href="https://temurcanbulut.github.io/pasla/?lang=tr">Web sitesi</a> · <a href="README.md">English</a>
 </p>
@@ -35,14 +35,14 @@ Aynı ağda birkaç bilgisayarınız varsa dosya taşımak genelde USB bellek, u
 | Ağı dinleyen biri | Cihazlar arası trafik karşılıklı TLS 1.3, telefon trafiği TLS ile şifreli |
 | Araya girme (MITM) | Eşleştirmede taahhütlü 6 haneli kod karşılaştırması; sonra her bağlantıda sertifika parmak izi sabitleme |
 | Başka bir cihazın kılığına girme | Kimlik isimle değil, parmak iziyle belirlenir. Eşleşmiş bir cihazın adını taşıyan yabancı cihaz kırmızıyla işaretlenir |
-| Sürekli eşleştirme isteğiyle taciz | Reddedilen cihaz ve IP önce 30 sn, sonra katlanarak 15 dk'ya kadar bekletilir; dakikada en fazla 6 istek |
+| Sürekli eşleştirme isteğiyle taciz | Reddedilen cihaz ve IP önce 30 sn, sonra katlanarak 15 dk'ya kadar bekletilir; kaynak IP başına dakikada en fazla 6 istek |
 | İstenmeyen dosya | Varsayılan olarak her gönderim onay ister. Çalıştırılabilir dosyalar (exe, msi, ps1, bat, sh…) kabul ekranında uyarıyla gösterilir |
 | Windows'ta zararlı dosyayı açma | Gelen dosyalara tarayıcıların indirmelere eklediği "Web işareti" (Mark of the Web) eklenir; SmartScreen ve Office Korumalı Görünüm devreye girer |
 | Dizin dışına yazma | Gelen dosya adları temizlenir (`..`, mutlak yollar, Windows'a yasak adlar). Bu kod fuzz testinden geçirilir |
 | Diskin dolması | Alıcıda yer yoksa gönderim baştan reddedilir; diskte her zaman 256 MB boş bırakılır |
 | Aynı bilgisayardaki başka kullanıcı ya da program | Yerel arayüz bir oturum anahtarı ister. Tarayıcı tek kullanımlık, 2 dakikalık bir kodla oturum açar; anahtar yalnızca sizin okuyabildiğiniz bir dosyadadır |
 | Tarayıcıdaki başka bir site | `Host` ve `Origin` denetimi, SameSite=Strict çerezler, sıkı içerik güvenlik politikası (CSP) |
-| QR kodu gören biri | Telefon anahtarı 10 dakikada, 8 yanlış denemede geçersiz olur. Her telefon bilgisayarda 4 haneli numarayla ayrıca onaylanır |
+| QR kodu gören biri | Telefon anahtarı 10 dakikada veya ilk başarılı girişte geçersiz olur; tahmin sınırı kaynak IP başınadır. Her telefon bilgisayarda 4 haneli numarayla ayrıca onaylanır |
 
 Daha fazlası: [docs/PROTOCOL.tr.md](docs/PROTOCOL.tr.md) · Açık bildirmek için: [SECURITY.tr.md](SECURITY.tr.md)
 

@@ -142,11 +142,12 @@ func (n *Node) hPairStart(w http.ResponseWriter, r *http.Request) {
 	}
 	n.mu.Lock()
 	pending := 0
-	for id, s := range n.pairs {
+	for _, s := range n.pairs {
 		if s.Role == "in" {
 			if s.PeerFP == fp {
-				delete(n.pairs, id)
-				continue
+				n.mu.Unlock()
+				jsonErr(w, r, http.StatusConflict, i18n.E("a pairing session for this device is already pending"))
+				return
 			}
 			pending++
 		}
@@ -213,7 +214,10 @@ func (n *Node) hPairFinish(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	s := n.inSession(r, req.SID)
-	if s == nil || s.na == nil {
+	n.mu.Lock()
+	ready := s != nil && s.na != nil
+	n.mu.Unlock()
+	if !ready {
 		jsonErr(w, r, http.StatusNotFound, i18n.E("pairing session not found"))
 		return
 	}

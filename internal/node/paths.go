@@ -42,6 +42,7 @@ func sanitizeRelPath(p string) ([]string, error) {
 
 var winReserved = map[string]bool{
 	"CON": true, "PRN": true, "AUX": true, "NUL": true,
+	"CONIN$": true, "CONOUT$": true, "COM¹": true, "COM²": true, "COM³": true, "LPT¹": true, "LPT²": true, "LPT³": true,
 	"COM1": true, "COM2": true, "COM3": true, "COM4": true, "COM5": true, "COM6": true, "COM7": true, "COM8": true, "COM9": true,
 	"LPT1": true, "LPT2": true, "LPT3": true, "LPT4": true, "LPT5": true, "LPT6": true, "LPT7": true, "LPT8": true, "LPT9": true,
 }
@@ -118,7 +119,10 @@ func uniqueName(dir, name string, taken map[string]bool) string {
 // "Fotoğraflar" arriving twice becomes "Fotoğraflar (2)" with its contents
 // intact instead of mixing into the old one.
 func planDestinations(root string, rel [][]string) []string {
-	taken := map[string]bool{}
+	return planDestinationsTaken(root, rel, map[string]bool{})
+}
+
+func planDestinationsTaken(root string, rel [][]string, taken map[string]bool) []string {
 	top := map[string]string{}
 	out := make([]string, len(rel))
 	used := map[string]bool{}
@@ -145,3 +149,29 @@ func planDestinations(root string, rel [][]string) []string {
 }
 
 func mkdirAll(dir string) error { return os.MkdirAll(dir, 0o755) }
+
+// Reserve complete top-level destinations across all in-flight batches, before
+// any file exists on disk. File creation separately remains exclusive/no-clobber.
+func (n *Node) reserveDestinations(t *Transfer, root string, rel [][]string) {
+	n.mu.Lock()
+	defer n.mu.Unlock()
+	taken := map[string]bool{}
+	for _, other := range n.transfers {
+		other.mu.Lock()
+		if other.Dir == "in" && !terminal(other.state) {
+			for _, dest := range other.dest {
+				rp, err := filepath.Rel(root, dest)
+				if err == nil && rp != ".." && !strings.HasPrefix(rp, ".."+string(filepath.Separator)) {
+					top := strings.SplitN(rp, string(filepath.Separator), 2)[0]
+					taken[strings.ToLower(filepath.Join(root, top))] = true
+				}
+			}
+		}
+		other.mu.Unlock()
+	}
+	dest := planDestinationsTaken(root, rel, taken)
+	t.mu.Lock()
+	t.dest = dest
+	t.reveal = revealTarget(root, dest)
+	t.mu.Unlock()
+}

@@ -24,11 +24,12 @@ import (
 )
 
 const (
-	maxFilesPerTransfer = 200_000
-	offerWait           = 5 * time.Minute
-	keepTransfers       = 300
-	keepMessages        = 500
-	maxMessageBytes     = 1 << 20
+	maxFilesPerTransfer       = 200_000
+	maxTransferBytes    int64 = 16 << 40 // 16 TiB per file and batch
+	offerWait                 = 5 * time.Minute
+	keepTransfers             = 300
+	keepMessages              = 500
+	maxMessageBytes           = 1 << 20
 )
 
 type FileMeta struct {
@@ -122,23 +123,39 @@ func terminal(state string) bool {
 	return state == "done" || state == "rejected" || state == "cancelled" || state == "failed"
 }
 
-func (n *Node) newTransfer(id, dir, peerFP string, files []FileMeta) *Transfer {
+func checkedTransferTotal(files []FileMeta) (int64, error) {
+	if len(files) == 0 || len(files) > maxFilesPerTransfer {
+		return 0, i18n.E("invalid number of files")
+	}
+	var total int64
+	for _, f := range files {
+		if f.Size < 0 || f.Size > maxTransferBytes || f.Size > maxTransferBytes-total {
+			return 0, i18n.E("transfer exceeds the 16 TiB size limit")
+		}
+		total += f.Size
+	}
+	return total, nil
+}
+
+func (n *Node) newTransfer(id, dir, peerFP string, files []FileMeta) (*Transfer, error) {
+	total, err := checkedTransferTotal(files)
+	if err != nil {
+		return nil, err
+	}
 	ctx, cancel := context.WithCancel(context.Background())
 	t := &Transfer{
 		ID: id, Dir: dir, PeerFP: peerFP, PeerName: n.peerName(peerFP), Files: files,
 		Created: time.Now(), ctx: ctx, cancel: cancel, decision: make(chan bool, 1),
 		state: "pending", fileState: make([]uint8, len(files)), lastAt: time.Now(),
 	}
-	for _, f := range files {
-		t.Total += f.Size
-	}
+	t.Total = total
 	n.mu.Lock()
 	n.transfers[id] = t
 	n.order = append(n.order, id)
 	n.trimTransfersLocked()
 	n.mu.Unlock()
 	n.bus.Publish("transfer", t.view(n.lang()))
-	return t
+	return t, nil
 }
 
 func (n *Node) trimTransfersLocked() {
@@ -339,7 +356,11 @@ func (n *Node) hOffer(w http.ResponseWriter, r *http.Request) {
 		rel[i] = parts
 		req.Files[i].Name = strings.Join(parts, "/")
 	}
-	t := n.newTransfer(req.ID, "in", fp, req.Files)
+	t, err := n.newTransfer(req.ID, "in", fp, req.Files)
+	if err != nil {
+		jsonErr(w, r, http.StatusBadRequest, err)
+		return
+	}
 
 	if free, ok := n.freeSpace(); ok && uint64(t.Total)+diskReserve > free {
 		msg := i18n.E("not enough free space on the receiving device (%s needed, %s free)", humanBytes(t.Total), humanBytes(int64(free)))
@@ -377,11 +398,7 @@ func (n *Node) hOffer(w http.ResponseWriter, r *http.Request) {
 		jsonErr(w, r, http.StatusInsufficientStorage, i18n.E("could not create the receive folder"))
 		return
 	}
-	dest := planDestinations(root, rel)
-	t.mu.Lock()
-	t.dest = dest
-	t.reveal = revealTarget(root, dest)
-	t.mu.Unlock()
+	n.reserveDestinations(t, root, rel)
 	n.setState(t, "active", nil)
 	writeJSON200(w, offerResp{Accepted: true})
 }
@@ -591,7 +608,10 @@ func (n *Node) Offer(fp string, files []FileMeta) (*Transfer, error) {
 			return nil, i18n.E("invalid file size")
 		}
 	}
-	t := n.newTransfer(randomID(), "out", fp, files)
+	t, err := n.newTransfer(randomID(), "out", fp, files)
+	if err != nil {
+		return nil, err
+	}
 	go n.runOffer(t)
 	return t, nil
 }

@@ -14,7 +14,7 @@ type pairGuard struct {
 	mu      sync.Mutex
 	until   map[string]time.Time
 	strikes map[string]int
-	recent  []time.Time
+	recent  map[string][]time.Time
 }
 
 const (
@@ -24,7 +24,7 @@ const (
 )
 
 func newPairGuard() *pairGuard {
-	return &pairGuard{until: map[string]time.Time{}, strikes: map[string]int{}}
+	return &pairGuard{until: map[string]time.Time{}, strikes: map[string]int{}, recent: map[string][]time.Time{}}
 }
 
 // allow reports whether a new request may start, and if not, how long to wait.
@@ -36,17 +36,32 @@ func (g *pairGuard) allow(fp, ip string, now time.Time) (bool, time.Duration) {
 			return false, t.Sub(now)
 		}
 	}
-	keep := g.recent[:0]
-	for _, t := range g.recent {
+	// Expire source buckets and penalty records to cap attacker-created state.
+	for k, times := range g.recent {
+		if len(times) == 0 || now.Sub(times[len(times)-1]) >= pairBurstEvery {
+			delete(g.recent, k)
+		}
+	}
+	for k, until := range g.until {
+		if now.Sub(until) > pairMaxBlock {
+			delete(g.until, k)
+			delete(g.strikes, k)
+		}
+	}
+	if _, ok := g.recent[ip]; !ok && len(g.recent) >= 2048 {
+		return false, pairBurstEvery
+	}
+	keep := g.recent[ip][:0]
+	for _, t := range g.recent[ip] {
 		if now.Sub(t) < pairBurstEvery {
 			keep = append(keep, t)
 		}
 	}
-	g.recent = keep
-	if len(g.recent) >= pairBurst {
-		return false, pairBurstEvery - now.Sub(g.recent[0])
+	g.recent[ip] = keep
+	if len(keep) >= pairBurst {
+		return false, pairBurstEvery - now.Sub(keep[0])
 	}
-	g.recent = append(g.recent, now)
+	g.recent[ip] = append(keep, now)
 	return true, 0
 }
 

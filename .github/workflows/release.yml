@@ -6,9 +6,22 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
+  source-ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Require green CI for this exact commit
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python tools/require_green_ci.py
   build:
+    needs: source-ci
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
