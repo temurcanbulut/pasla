@@ -67,15 +67,15 @@
     "sec.title": "Ağınızda gönül rahatlığıyla",
     "sec.lede": "Yerel ağ kendiliğinden güvenli değildir. Pasla, ağda başka birinin de olabileceğini varsayar.",
     "sec.1.t": "Şifreli",
-    "sec.1.p": "Bilgisayarlar karşılıklı TLS 1.3 ile, telefonlar TLS ile konuşur. Ağdaki kimse gönderdiğinizi okuyamaz.",
+    "sec.1.p": "Masaüstü eşleri karşılıklı TLS 1.3 ve parmak izi denetimi kullanır. Telefon TLS kullanır; tarayıcı başlangıcı aktif müdahaleye karşı güvenilir LAN gerektirir.",
     "sec.2.t": "Doğrulanmış eşleştirme",
-    "sec.2.p": "Bir kez iki ekranda 6 haneli kodu karşılaştırırsınız. Sonrasında her bağlantı karşı cihazın adına ya da IP'sine değil, sertifika parmak izine bakar.",
+    "sec.2.p": "Masaüstü eşleşmesinde iki ekrandaki 6 haneli kod karşılaştırılır. Sonraki masaüstü bağlantıları cihaz adı veya IP yerine sertifika parmak izini denetler.",
     "sec.3.t": "Klasörün dışına çıkmaz",
     "sec.3.p": "Gelen dosya adları temizlenir, bu kod fuzz testinden geçer. Windows'ta gelen dosyalara tarayıcı indirmeleri gibi Web işareti eklenir.",
     "sec.4.t": "Yalnızca siz kullanırsınız",
     "sec.4.p": "Arayüze yalnızca kendi bilgisayarınızdan ulaşılır, oturum anahtarı ister ve başka web sitelerinden gelen istekleri reddeder.",
     "sec.5.t": "Tahmini zor, ömrü kısa",
-    "sec.5.p": "Telefonun QR anahtarı 10 dakika geçerlidir, 8 yanlış denemede iptal olur ve her telefon ayrıca bilgisayarda onaylanır.",
+    "sec.5.p": "Telefon QR anahtarı 10 dakika geçerlidir ve bir kez kullanılır. Tahmin sınırı kaynak IP başınadır; her telefon ayrıca bilgisayarda onaylanır. Aktif araya girmeye karşı telefon kanalı güvenilir LAN gerektirir.",
     "sec.6.t": "Hesap yok, takip yok",
     "sec.6.p": "Sunucu da telemetri de yok. Pasla'nın bildiği her şey bilgisayarınızdaki bir klasörde kalır.",
     "sec.proto": "Protokol ve tehdit modeli",
@@ -91,7 +91,7 @@
     "dl.phone.p": "İndirilecek bir şey yok. Pasla çalışan bir bilgisayarın gösterdiği QR kodu okutun.",
     "dl.n1": "<b>Windows:</b> Dosyaya çift tıklayın. Arayüz tarayıcıda açılır, saatin yanında bir Pasla simgesi belirir. İlk açılışta güvenlik duvarı sorarsa <b>Özel ağlar</b> için izin verin.",
     "dl.n2": "<b>Linux:</b> <code>chmod +x pasla-linux-amd64 &amp;&amp; ./pasla-linux-amd64</code>",
-    "dl.n3": "İndirdiğiniz dosyayı <a href=\"https://github.com/temurcanbulut/pasla/releases/tag/v0.4.2-beta.1\">sürüm sayfasındaki</a> <code>SHA256SUMS.txt</code> ile karşılaştırabilir ya da Go ile <a href=\"https://github.com/temurcanbulut/pasla/blob/main/README.tr.md\">kendiniz derleyebilirsiniz</a>.",
+    "dl.n3": "İndirdiğiniz dosyayı <a href=\"https://github.com/temurcanbulut/pasla/releases/tag/v0.4.3-beta.1\">sürüm sayfasındaki</a> <code>SHA256SUMS.txt</code> ile karşılaştırabilir ya da Go ile <a href=\"https://github.com/temurcanbulut/pasla/blob/main/README.tr.md\">kendiniz derleyebilirsiniz</a>.",
     "dl.setup": "Linux / Kali: hızlı başlangıç",
     "dl.setupIntro": "x86_64 (amd64) bir cihazda bu komutları terminale yapıştırın. Program yalnızca SHA256 doğrulaması başarılıysa başlar. Root ya da Go kurulumu gerekmez.",
     "dl.setupNetwork": "Terminali açık tutun. Aynı yerel ağdaki diğer bilgisayarda da Pasla'yı açın, iki ekrandaki eşleştirme kodunu karşılaştırın ve iki yöne de küçük bir dosya gönderin. Sanal makinede otomatik keşif için ağ bağdaştırıcısını köprü (bridged) modunda kullanın.",
@@ -102,7 +102,7 @@
     "faq.2.q": "Gerçekten ücretsiz mi?",
     "faq.2.a": "Evet. Pasla MIT lisanslı açık kaynaktır. Hesap, reklam, ücretli sürüm ya da takip yoktur.",
     "faq.3.q": "Windows dosya için uyarı veriyor. Güvenli mi?",
-    "faq.3.a": "Kod imzası olmayan yeni programlar başta sık sık SmartScreen uyarısı alır, yapay zekâ tabanlı bazı antivirüs motorları da yanılabilir. Kaynak kodun tamamı açıktır: dosyayı <code>SHA256SUMS.txt</code> ile karşılaştırabilir ya da kendiniz derleyebilirsiniz.",
+    "faq.3.a": "Windows imzasız ikililer için uyarı gösterebilir. Çalıştırmadan önce açık kaynağı ve yayın kökenini inceleyin; <code>SHA256SUMS.txt</code> indirilen baytları doğrular.",
     "faq.4.q": "Telefonum neden bağlantının gizli olmadığını söylüyor?",
     "faq.4.a": "Bilgisayarınız sertifikasını kendisi üretti; telefonun tarayıcısı bunu herkese açık bir otoriteyle doğrulayamaz. Bağlantı yine de şifrelidir; doğru bilgisayara bağlandığınızı karşılaştırdığınız 4 haneli numara kanıtlar.",
     "faq.5.q": "Pencereyi kapatınca ne olur?",
@@ -200,7 +200,7 @@
   function downloadButton() {
     const label = document.getElementById("dl-main-label");
     if (!isLinux || !label) return;
-    document.getElementById("dl-main").href = "https://github.com/temurcanbulut/pasla/releases/download/v0.4.2-beta.1/pasla-linux-amd64";
+    document.getElementById("dl-main").href = "https://github.com/temurcanbulut/pasla/releases/download/v0.4.3-beta.1/pasla-linux-amd64";
     if (!EN.has("hero.dlLinux")) EN.set("hero.dlLinux", "Download for Linux");
     label.dataset.i = "hero.dlLinux";
     label.innerHTML = text("hero.dlLinux");

@@ -21,8 +21,16 @@ class ReleaseGateTests(unittest.TestCase):
             gate.require_successful_ci("fixture/repository", SHA, "offline-test-token")
 
     def row(self, **extra):
-        return {"head_sha": SHA, "event": "push", "run_number": 1, "status": "completed",
-                "conclusion": "success", "html_url": "https://example.invalid/fixture", **extra}
+        return {
+            "head_sha": SHA,
+            "head_branch": "main",
+            "event": "push",
+            "run_number": 1,
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://example.invalid/fixture",
+            **extra,
+        }
 
     def test_matching_success_allows_release(self):
         self.run_gate([self.row()])
@@ -33,10 +41,20 @@ class ReleaseGateTests(unittest.TestCase):
                 self.run_gate(rows)
 
     def test_newer_failure_or_rerun_blocks_older_success(self):
-        for newer in (self.row(run_number=2, conclusion="failure"),
-                      self.row(run_attempt=2, status="in_progress", conclusion=None)):
+        for newer in (
+            self.row(run_number=2, conclusion="failure"),
+            self.row(run_attempt=2, status="in_progress", conclusion=None),
+        ):
             with self.assertRaises(SystemExit):
                 self.run_gate([self.row(), newer])
+
+    def test_pr_merge_ref_or_non_main_ci_does_not_qualify(self):
+        for rows in (
+            [self.row(event="pull_request")],
+            [self.row(head_branch="feature")],
+        ):
+            with self.assertRaises(SystemExit):
+                self.run_gate(rows)
 
     def test_invalid_repository_never_calls_network(self):
         with patch.object(gate.urllib.request, "urlopen") as request:

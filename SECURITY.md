@@ -6,14 +6,14 @@ Pasla's goal is that someone who shares your network but whom you do not trust s
 
 ## Supported versions
 
-Security fixes are made only for the latest release.
+Security fixes are made only for the latest release. Use v0.4.3-beta.1 or newer for the 2026-11 discovery, transfer-size and phone-session fixes. Older binaries remain historical releases, not supported alternatives.
 
 ## Out of scope
 
 - **Someone with administrator access to the computer itself.** They can read the key and session file in the settings directory.
 - **Network denial of service (DoS).** Pairing requests and pending offers are limited, but an attacker on the same network can block traffic entirely.
-- **False names and operating systems in discovery packets.** This information is not verified; trust is based only on the fingerprint. Impersonated names are flagged in the interface.
-- **The phone browser's certificate warning.** Users bypass the warning themselves when connecting a phone. Even if an attacker intercepts this step, they cannot perform any action without the 4-digit approval on the computer. This path is nevertheless not as strong as a connection between two paired computers.
+- **Self-chosen device labels.** Raw UDP labels are ignored. Saved metadata comes from a certificate-verified device, but its owner can still choose any display name. Trust remains tied to the fingerprint, not a person or label.
+- **Active interception of the phone browser bootstrap.** After a self-signed warning is bypassed, an attacker can substitute the page, read the QR fragment and relay the four-digit approval. That number is not independent authentication against an active LAN MITM. Use the phone feature only on a trusted LAN or use fingerprint-pinned desktop pairing. A fingerprint printed by the same untrusted page does not repair this boundary.
 
 ## Reporting a vulnerability
 

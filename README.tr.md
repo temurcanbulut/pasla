@@ -33,7 +33,7 @@ Aynı ağda birkaç bilgisayarınız varsa dosya taşımak genelde USB bellek, u
 | Tehdit | Önlem |
 |---|---|
 | Ağı dinleyen biri | Cihazlar arası trafik karşılıklı TLS 1.3, telefon trafiği TLS ile şifreli |
-| Araya girme (MITM) | Eşleştirmede taahhütlü 6 haneli kod karşılaştırması; sonra her bağlantıda sertifika parmak izi sabitleme |
+| Masaüstü eşleşmesinde araya girme (MITM) | Eşleştirmede taahhütlü 6 haneli kod karşılaştırması; sonra her bağlantıda sertifika parmak izi sabitleme |
 | Başka bir cihazın kılığına girme | Kimlik isimle değil, parmak iziyle belirlenir. Eşleşmiş bir cihazın adını taşıyan yabancı cihaz kırmızıyla işaretlenir |
 | Sürekli eşleştirme isteğiyle taciz | Reddedilen cihaz ve IP önce 30 sn, sonra katlanarak 15 dk'ya kadar bekletilir; kaynak IP başına dakikada en fazla 6 istek |
 | İstenmeyen dosya | Varsayılan olarak her gönderim onay ister. Çalıştırılabilir dosyalar (exe, msi, ps1, bat, sh…) kabul ekranında uyarıyla gösterilir |
@@ -70,7 +70,7 @@ sha256sum -c SHA256SUMS.txt --ignore-missing
 
 **Windows:** Dosyaya çift tıklayın. Siyah konsol penceresi açılmaz: arayüz tarayıcıda görünür, saatin yanındaki bildirim alanında da bir Pasla simgesi belirir. Simgeye tıklayınca arayüz yeniden açılır, sağ tıklayınca kapatabilirsiniz. İlk açılışta güvenlik duvarı izin soracaktır; **Özel ağlar** kutusunu işaretleyip izin verin.
 
-> İmzasız ve yeni yayımlanmış her program gibi Pasla da ilk zamanlarda Windows SmartScreen uyarısı ya da bazı antivirüslerin yapay zekâ tabanlı motorlarından yanlış alarm alabilir. Kaynak kodun tamamı bu depoda; isterseniz [kendiniz derleyebilirsiniz](#kaynaktan-derleme).
+> Windows imzasız ikililer için uyarı gösterebilir. Çalıştırmadan önce açık kaynağı ve yayın kökenini inceleyin; özetler baytları doğrular. İsterseniz [kaynaktan derleyebilirsiniz](#kaynaktan-derleme).
 
 **Linux:**
 
