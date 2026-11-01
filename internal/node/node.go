@@ -86,7 +86,10 @@ type Node struct {
 	win      windowWatch
 	phone    *phoneHub
 
-	udp *net.UDPConn
+	discoveryMu     sync.Mutex
+	discoveryRecent map[string]time.Time
+	discoveryActive int
+	udp             *net.UDPConn
 }
 
 func New(cfg Config) (*Node, error) {
@@ -293,7 +296,7 @@ func (n *Node) prune(now time.Time) {
 	}
 }
 
-// seePeer records a sighting and reports whether the device is new.
+// seePeer records only certificate-verified /v1/info results, never raw UDP claims.
 func (n *Node) seePeer(p Peer) bool {
 	p.LastSeen = time.Now()
 	n.mu.Lock()
@@ -308,7 +311,10 @@ func (n *Node) seePeer(p Peer) bool {
 	if changed {
 		n.bus.Publish("peers", nil)
 	}
-	if _, trusted := n.store.Trusted(p.FP); trusted {
+	if prior, trusted := n.store.Trusted(p.FP); trusted {
+		if prior.Name != "" && p.Name != "" && prior.Name != p.Name {
+			n.bus.Publish("peer-renamed", map[string]string{"fp": p.FP, "old": prior.Name, "name": p.Name})
+		}
 		_ = n.store.UpdateTrusted(p.FP, func(t *TrustedPeer) {
 			t.LastAddr = cp.addr()
 			if p.Name != "" {

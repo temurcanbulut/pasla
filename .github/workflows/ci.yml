@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,6 +27,7 @@ jobs:
         if: runner.os == 'Linux'
         run: test -z "$(gofmt -l .)"
       - run: go vet ./...
+      - run: python -m unittest discover -s tools -p test_release_gate.py
       - name: Test (race detector)
         if: runner.os == 'Linux'
         run: go test -race -count=1 ./...

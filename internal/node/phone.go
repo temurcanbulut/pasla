@@ -52,7 +52,7 @@ const (
 	phoneIdleLife    = 30 * time.Minute
 	phoneCookie      = "pasla_phone"
 	phoneMaxSessions = 4
-	phoneMaxBadKeys  = 8
+	phoneMaxBadKeys  = 8 // per source per minute; never invalidates another phone's QR
 )
 
 type phoneHub struct {
@@ -61,7 +61,7 @@ type phoneHub struct {
 	ln       net.Listener
 	key      string
 	keyExp   time.Time
-	badKeys  int
+	attempts map[string][]time.Time
 	sessions map[string]*phoneSess
 	outDir   string
 }
@@ -159,7 +159,7 @@ func (n *Node) StartPhone() (PhoneView, error) {
 	}
 	h.key = base64.RawURLEncoding.EncodeToString(randomBytes(16))
 	h.keyExp = time.Now().Add(phoneKeyLife)
-	h.badKeys = 0
+	h.attempts = map[string][]time.Time{}
 	h.mu.Unlock()
 	n.bus.Publish("phones", nil)
 	return n.phoneView(), nil
@@ -423,14 +423,27 @@ func (n *Node) pLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	h := n.phone
 	h.mu.Lock()
+	now := time.Now()
+	host, _, _ := net.SplitHostPort(r.RemoteAddr)
+	if h.attempts == nil {
+		h.attempts = map[string][]time.Time{}
+	}
+	for ip, times := range h.attempts {
+		if len(times) == 0 || now.Sub(times[len(times)-1]) >= time.Minute {
+			delete(h.attempts, ip)
+		}
+	}
+	attempts := h.attempts[host]
+	if len(attempts) >= phoneMaxBadKeys || len(h.attempts) >= 2048 {
+		h.mu.Unlock()
+		w.Header().Set("Retry-After", "60")
+		jsonErr(w, r, http.StatusTooManyRequests, i18n.E("too many login attempts; try again later"))
+		return
+	}
+	h.attempts[host] = append(attempts, now)
 	live := h.key != "" && time.Now().Before(h.keyExp)
 	if !live || subtle.ConstantTimeCompare([]byte(req.Key), []byte(h.key)) != 1 {
-		if live {
-			h.badKeys++
-			if h.badKeys >= phoneMaxBadKeys {
-				h.key = "" // too many guesses: the user has to show a new QR code
-			}
-		}
+
 		h.mu.Unlock()
 		jsonErr(w, r, http.StatusUnauthorized, i18n.E("The QR code has expired or is not valid. Create a new code on the computer and scan it again."))
 		return
@@ -455,6 +468,7 @@ func (n *Node) pLogin(w http.ResponseWriter, r *http.Request) {
 		cookie: hex.EncodeToString(randomBytes(32)), Created: time.Now(), LastSeen: time.Now(),
 	}
 	h.sessions[s.ID] = s
+	h.key = "" // one successful use, even while desktop approval is pending
 	h.mu.Unlock()
 	http.SetCookie(w, &http.Cookie{
 		Name: phoneCookie, Value: s.cookie, Path: "/", Secure: true, HttpOnly: true, SameSite: http.SameSiteStrictMode,
@@ -470,6 +484,7 @@ func (n *Node) phoneAuth(needApproved bool, next phoneHandlerFunc) http.HandlerF
 	return func(w http.ResponseWriter, r *http.Request) {
 		c, err := r.Cookie(phoneCookie)
 		var s *phoneSess
+		approved := false
 		if err == nil {
 			h := n.phone
 			h.mu.Lock()
@@ -480,6 +495,7 @@ func (n *Node) phoneAuth(needApproved bool, next phoneHandlerFunc) http.HandlerF
 			}
 			if s != nil {
 				s.LastSeen = time.Now()
+				approved = s.Approved
 			}
 			h.mu.Unlock()
 		}
@@ -487,7 +503,7 @@ func (n *Node) phoneAuth(needApproved bool, next phoneHandlerFunc) http.HandlerF
 			jsonErr(w, r, http.StatusUnauthorized, i18n.E("Disconnected. Scan the QR code on the computer again."))
 			return
 		}
-		if needApproved && !s.Approved {
+		if needApproved && !approved {
 			jsonErr(w, r, http.StatusForbidden, i18n.E("waiting for approval on the computer"))
 			return
 		}
@@ -549,7 +565,11 @@ func (n *Node) pOffer(w http.ResponseWriter, r *http.Request, s *phoneSess) {
 		rel[i] = parts
 		req.Files[i].Name = strings.Join(parts, "/")
 	}
-	t := n.newTransfer(randomID(), "in", phoneFP(s.ID), req.Files)
+	t, err := n.newTransfer(randomID(), "in", phoneFP(s.ID), req.Files)
+	if err != nil {
+		jsonErr(w, r, http.StatusBadRequest, err)
+		return
+	}
 	if free, ok := n.freeSpace(); ok && uint64(t.Total)+diskReserve > free {
 		msg := i18n.E("not enough free space on the computer (%s needed)", humanBytes(t.Total))
 		n.setState(t, "rejected", msg)
@@ -562,11 +582,7 @@ func (n *Node) pOffer(w http.ResponseWriter, r *http.Request, s *phoneSess) {
 		jsonErr(w, r, http.StatusInternalServerError, i18n.E("could not create the receive folder"))
 		return
 	}
-	dest := planDestinations(root, rel)
-	t.mu.Lock()
-	t.dest = dest
-	t.reveal = revealTarget(root, dest)
-	t.mu.Unlock()
+	n.reserveDestinations(t, root, rel)
 	n.setState(t, "active", nil)
 	writeJSON200(w, map[string]string{"id": t.ID})
 }

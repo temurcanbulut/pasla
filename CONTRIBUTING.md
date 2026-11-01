@@ -14,3 +14,9 @@ Before submitting:
 ```sh
 make vet test
 ```
+
+## CI and review history
+
+Security fixes must run CI without skip directives. Release tags require green
+checks for the exact commit. Keep changes reviewable and preserve actual history;
+do not backdate commits or manufacture issues, reviews or benchmark gains.

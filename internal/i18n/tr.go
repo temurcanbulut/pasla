@@ -3,6 +3,9 @@ package i18n
 // tr is the Turkish catalogue for messages produced by the Go code. The
 // interface's own texts live in internal/ui/static/i18n.js.
 var tr = map[string]string{
+	"a pairing session for this device is already pending": "bu cihaz için zaten bekleyen bir eşleştirme oturumu var",
+	"too many login attempts; try again later":             "çok fazla giriş denemesi; daha sonra yeniden deneyin",
+	"transfer exceeds the 16 TiB size limit":               "aktarım 16 TiB boyut sınırını aşıyor",
 	// Transfers and files
 	"%s changed or got shorter while it was being read": "%s okunurken değişti ya da kısaldı",
 	"%s: expected %v bytes, received %v":                "%s: %v bayt bekleniyordu, %v bayt geldi",

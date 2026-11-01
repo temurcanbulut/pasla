@@ -12,6 +12,7 @@
   ];
 
   const TR = {
+    "Paired device renamed: {old} → {name}": "Eşleşmiş cihazın adı değişti: {old} → {name}",
     // units and time
     "{n} s": "{n} sn",
     "{n} min": "{n} dk",

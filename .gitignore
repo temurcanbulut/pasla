@@ -32,3 +32,6 @@ Thumbs.db
 desktop.ini
 .idea/
 .vscode/
+# Python release-gate tooling caches are never published.
+__pycache__/
+*.py[cod]

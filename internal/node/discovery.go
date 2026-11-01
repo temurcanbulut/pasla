@@ -2,9 +2,11 @@ package node
 
 import (
 	"context"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -81,14 +83,27 @@ func (n *Node) readHellos(conn *net.UDPConn) {
 		if h.Port <= 0 || h.Port > 65535 {
 			continue
 		}
-		if h.Bye {
-			n.forgetPeer(h.FP)
+		// UDP is an unauthenticated hint. Ignore goodbye and claimed display names.
+		// A successful pinned TLS probe is the only way to refresh a peer.
+		if h.Bye || h.V != protocolVersion {
 			continue
 		}
-		isNew := n.seePeer(Peer{FP: h.FP, Name: clip(h.Name, 64), OS: clip(h.OS, 16), Host: src.IP.String(), Port: h.Port})
-		if isNew && !h.Reply {
-			_, _ = conn.WriteToUDP(n.hello(true, false), src)
+		if _, err := hex.DecodeString(h.FP); err != nil {
+			continue
 		}
+		endpoint := net.JoinHostPort(src.IP.String(), strconv.Itoa(h.Port))
+		if !n.beginDiscoveryProbe(endpoint, time.Now()) {
+			continue
+		}
+		replyAddr := *src
+		go func(h hello, endpoint string) {
+			defer n.endDiscoveryProbe()
+			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+			defer cancel()
+			if _, err := n.probeExpected(ctx, endpoint, false, h.FP); err == nil && !h.Reply {
+				_, _ = conn.WriteToUDP(n.hello(true, false), &replyAddr)
+			}
+		}(h, endpoint)
 	}
 }
 
@@ -172,3 +187,27 @@ func clip(s string, max int) string {
 	}
 	return string(r)
 }
+
+// Bound UDP-triggered network work and memory, including forged fingerprints.
+func (n *Node) beginDiscoveryProbe(endpoint string, now time.Time) bool {
+	n.discoveryMu.Lock()
+	defer n.discoveryMu.Unlock()
+	if n.discoveryRecent == nil {
+		n.discoveryRecent = map[string]time.Time{}
+	}
+	for k, at := range n.discoveryRecent {
+		if now.Sub(at) > 12*time.Second {
+			delete(n.discoveryRecent, k)
+		}
+	}
+	if at, ok := n.discoveryRecent[endpoint]; ok && now.Sub(at) < 2*time.Second {
+		return false
+	}
+	if n.discoveryActive >= 4 || len(n.discoveryRecent) >= 256 {
+		return false
+	}
+	n.discoveryRecent[endpoint] = now
+	n.discoveryActive++
+	return true
+}
+func (n *Node) endDiscoveryProbe() { n.discoveryMu.Lock(); n.discoveryActive--; n.discoveryMu.Unlock() }
